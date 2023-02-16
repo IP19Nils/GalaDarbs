@@ -1,1 +1,443 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
+.container {
+    background: url(../image/Background.png);
+    background-size: cover;
+    background-position: center;
+    background-position-y: 15%;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textCenter {
+    display: flex;
+    text-align: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.login-box {
+    background-color: rgba(1, 11, 20, 0.8);
+    width: 400px;
+    height: 550px;
+    border-radius: 5%;
+}
+
+.eye {
+    font-size: 24px;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 315px;
+}
+
+.pass-eye {
+    display: flex;
+    justify-content: center;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    width: 400px;
+    margin-top: 5px;
+    gap: 185px;
+}
+
+h1 {
+    color: white;
+    margin-bottom: 50px;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+}
+
+.input-style {
+    width: 350px;
+    height: 40px;
+    margin: 7px;
+    border-radius: 5px;
+    border: 0;
+    padding-left: 5px;
+    outline: none;
+}
+
+#strong {
+    display: flex;
+    font-size: 10px;
+    margin-left: 25px;
+}
+
+.weak::after {
+    content: 'Weak Password';
+    color: red;
+}
+
+.medium::after {
+    content: 'Medium Password';
+    color: yellow;
+}
+
+.strong::after {
+    content: 'Strong Password';
+    color: green;
+}
+
+.reg-style {
+    width: 172px;
+    height: 40px;
+    margin: 7px;
+    margin-right: 3px;
+    margin-left: 3px;
+    border-radius: 5px;
+    border: 0;
+    padding-left: 5px;
+    outline: none;
+}
+
+.btn {
+    width: 350px;
+    height: 40px;
+    margin: 7px;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    transition: 800ms ease-in-out;
+    border: 0;
+    font-size: 20px;
+}
+
+.btn:hover {
+    background-color: rgb(255, 0, 0);
+}
+
+.diamond,
+.heart {
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.logout {
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.rightline {
+    right: 0;
+    width: 50px;
+    height: 100vh;
+    top: 0;
+    background-color: white;
+    position: fixed;
+}
+
+/* .box {
+    background-color: rgb(4, 0, 12);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: 100vh;
+} */
+
+#msg {
+    margin-top: 10px;
+    font-size: 20px;
+    color: white;
+}
+
+.profile-box {
+    width: 150vh;
+    height: 20vh;
+    background-color: white;
+}
+
+.rating-box {
+    width: 150vh;
+    height: 5vh;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+
+.fa-user {
+    border: 5px solid rgba(26, 26, 26, 0.2);
+    border-radius: 5px;
+}
+
+.w30 {
+    height: 20vh;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+.imgText {
+    color: black;
+    margin-top: 150px;
+    margin-right: 250px;
+    position: absolute;
+}
+
+
+.imgButton {
+    height: 30px;
+    width: 100px;
+    margin-top: 10vh;
+    margin-left: 1vh;
+    border: none;
+    background-color: #021830;
+    color: white;
+    transition: 400ms ease-in-out;
+}
+
+.imgButton:hover {
+    box-shadow: 5px 5px 0px rgba(255, 0, 0, 0.6);
+}
+
+.sort-box {
+    width: 30vh;
+    display: flex;
+    justify-content: center;
+}
+
+.w80 {
+    height: 20vh;
+    width: 70%;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #1eff00;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+.h25 {
+    height: 25vh;
+    width: 100%;
+}
+
+.h50 {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.w58-mid {
+    height: 50vh;
+    width: 58%;
+}
+
+.hit-cards {
+    z-index: 100;
+    position: absolute;
+}
+
+.w20 {
+    height: 25vh;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.w20-hited {
+    height: 25vh;
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.deckcards {
+    height: 25vh;
+    width: 50%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.enamydeckcards {
+    height: 25vh;
+    width: 50%;
+    display: flex;
+    align-items: flex-start;
+}
+
+#maste {
+    width: 130px;
+    height: 200px;
+    rotate: 90deg;
+    left: 70px;
+    position: relative;
+}
+
+#none {
+    width: 130px;
+    height: 200px;
+    margin: 5px;
+}
+
+#card-InHands,
+#enamy-look {
+    width: 130px;
+    height: 200px;
+    transition: 300ms ease-in-out;
+    margin-right: -40px;
+}
+
+#card-InHands:hover {
+    width: 150px;
+    height: 220px;
+    cursor: pointer;
+}
+
+.cardPlaced {
+    position: absolute;
+    top: 350px;
+}
+
+.deck {
+    width: 130px;
+    height: 200px;
+    position: fixed;
+    z-index: 1;
+}
+
+.fullsize {
+    width: 100%;
+    height: 100%;
+}
+
+.surr {
+    font-size: 32px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    width: 42px;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+}
+
+@media only screen and (max-width: 403px) {
+    .login-box {
+        width: 300px;
+    }
+
+    .input-style,
+    .btn {
+        width: 250px;
+    }
+
+    .reg-style {
+        width: 122px;
+    }
+
+    .eye {
+        margin-left: 220px;
+    }
+
+    .links {
+        gap: 90px;
+    }
+}
+
+@media only screen and (max-width: 303px) {
+    .login-box {
+        width: 250px;
+    }
+
+    .input-style,
+    .btn {
+        width: 200px;
+    }
+
+    .reg-style {
+        width: 97px;
+    }
+
+    .eye {
+        margin-left: 170px;
+    }
+
+    .links {
+        gap: 37px;
+    }
+}
