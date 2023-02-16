@@ -1,6 +1,8 @@
 <?php
 session_start();
+include "assets/controllers/rating.php";
 include "assets/controllers/sessionDestroy.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -13,12 +15,19 @@ include "assets/controllers/sessionDestroy.php";
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
     <script src="assets/js/script.js"></script>
-    <title>Menu</title>
+    <title>Player top</title>
 </head>
 
 <body>
     <div class="container center col">
-        <button onClick="location.href='http://into.id.lv/ip19/nils/game/board.php'">play</button>
+        <div class='rating-box'>
+            <p class="sort-box">Username</p>
+            <p class="sort-box">Money</p>
+            <p class="sort-box">Mach</p>
+            <p class="sort-box">Win</p>
+            <p class="sort-box">Lose</p>
+        </div>
+        <?php echo rating($conn); ?>
         <div class="rightline center col">
             <iconify-icon style="font-size: 32px" icon="mdi:cards-heart" class="heart" onClick="location.href='http://into.id.lv/ip19/nils/game/profile.php'"></iconify-icon>
             <iconify-icon style="font-size: 32px" icon="fluent-emoji-flat:club-suit" class="pointer" onClick="location.href='http://into.id.lv/ip19/nils/game/menu.php'"></iconify-icon>
