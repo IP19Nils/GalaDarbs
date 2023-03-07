@@ -1,11 +1,7 @@
 <?php
-// session_start();
-// include "assets/config/db.php";
-// include "assets/modules/dbOperations.php";
-// include "assets/controllers/select.php";
-
+session_start();
+include "assets/controllers/session.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,21 +12,23 @@
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
     <script src="assets/js/gameScript.js"></script>
-    <!-- <script src="assets/js/helps.js"></script> -->
+    <script src="assets/js/script.js"></script>
     <title>Board</title>
 </head>
 
 <body>
     <div class="container center col">
         <div class="fullsize">
-        <iconify-icon icon="ph:flag-fill" flip="horizontal" class="surr pointer" id="surr"></iconify-icon>
+            <form id="form">
+                <button class="hide-btn" onclick="getValue('assets/controllers/surrender.php')"><iconify-icon icon="ph:flag-fill" flip="horizontal" class="surr pointer" id="surr"></iconify-icon></button>
+            </form>
             <div class="h25 center">
-                <button id="endEnamyTurn">Beigt gājienu</button>
-                <button id="enamyPickUp">Pacelt</button>
-                <button id="enamyHit">Sists</button>
-                <button id="enamyHited">Nosists</button>
+                <button id="endenemyTurn">Beigt gājienu</button>
+                <button id="enemyPickUp">Pacelt</button>
+                <button id="enemyHit">Sists</button>
+                <button id="enemyHited">Piekrītu</button>
 
-                <div id="enamy-cards" class="enamydeckcards"></div>
+                <div id="enemy-cards" class="enemydeckcards"></div>
             </div>
             <div class="h50">
                 <div class="w20 center" id="w20">
@@ -39,7 +37,7 @@
 
                 <div class="w58-mid center">
                     <div id="placed-cards" class="placed-cards"></div>
-                    
+
                     <div id="hit-cards" class="hit-cards"></div>
                 </div>
 
@@ -52,7 +50,7 @@
                 <button id="endPlayerTurn">Beigt gājienu</button>
                 <button id="playerPickUp">Pacelt</button>
                 <button id="playerHit">Sists</button>
-                <button id="playerHited">Nosists</button>
+                <button id="playerHited">Piekrītu</button>
                 <div id="player-cards" class="deckcards"></div>
             </div>
         </div>

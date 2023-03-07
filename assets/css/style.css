@@ -42,6 +42,41 @@
     flex-wrap: wrap;
 }
 
+.ai-center {
+    align-items: center;
+}
+
+.jc-start {
+    display: flex;
+    justify-content: center;
+}
+
+.gap10 {
+    gap: 10px;
+}
+
+.text-w {
+    width: 200px;
+}
+
+.color {
+    color: #021830;
+}
+
+.color-w {
+    color: white
+}
+
+.row-profile {
+    display: flex;
+    flex-direction: row;
+}
+
+.rightline-col {
+    display: flex;
+    flex-direction: column;
+}
+
 .login-box {
     background-color: rgba(1, 11, 20, 0.8);
     width: 400px;
@@ -163,33 +198,37 @@ h1 {
     position: fixed;
 }
 
-/* .box {
-    background-color: rgb(4, 0, 12);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    min-height: 100vh;
-} */
-
 #msg {
     margin-top: 10px;
     font-size: 20px;
-    color: white;
 }
 
 .profile-box {
-    width: 150vh;
-    height: 20vh;
+    width: 70vh;
+    height: 95vh;
     background-color: white;
+}
+
+.mini-box-info-hide {
+    display: none;
 }
 
 .rating-box {
     width: 150vh;
-    height: 5vh;
+    height: 10vh;
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+
+.mini-rating-box {
+    width: 150vh;
+    height: 10vh;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
     align-items: center;
     background-color: white;
 }
@@ -199,30 +238,92 @@ h1 {
     border-radius: 5px;
 }
 
-.w30 {
-    height: 20vh;
-    width: 30%;
-    display: flex;
-    justify-content: center;
+.w50 {
+    width: 35vh;
+    font-size: 20px;
+    height: 47.5vh;
+    padding-bottom: 125px;
+}
+
+.w50-username {
+    width: 35vh;
+    font-size: 20px;
+    height: 47.5vh;
+}
+
+.w50-text {
+    width: 35vh;
+    font-size: 20px;
+    height: 47.5vh;
+}
+
+.w50-split {
+    width: 100%;
+    font-size: 20px;
+    height: 23.7vh;
 }
 
 .imgText {
     color: black;
-    margin-top: 150px;
-    margin-right: 250px;
     position: absolute;
 }
 
+.profile-btn {
+    width: 200px;
+    height: 50px;
+    background-color: #021830;
+    margin-bottom: 10px;
+}
+
+.delete-btn {
+    background: none;
+    color: red;
+    font-size: 16px;
+    text-align: center;
+    border-bottom: solid 2px;
+    padding-bottom: 2px;
+}
+
+.usernameChange {
+    width: 130px;
+    height: 180px;
+    border: 2px solid #021830;
+    border-radius: 10px;
+}
+
+.input-changeUsername {
+    background: #021830;
+    outline: none;
+    border: none;
+    padding-left: 5px;
+    height: 30px;
+    width: 110px;
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.input-changeUsername::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.btn-changeUsername {
+    width: 50px;
+    height: 20px;
+    border: none;
+    color: white;
+    background: #021830;
+}
 
 .imgButton {
     height: 30px;
     width: 100px;
-    margin-top: 10vh;
     margin-left: 1vh;
     border: none;
     background-color: #021830;
     color: white;
-    transition: 400ms ease-in-out;
+    transition: 300ms ease-in-out;
 }
 
 .imgButton:hover {
@@ -235,9 +336,9 @@ h1 {
     justify-content: center;
 }
 
-.w80 {
+.w40 {
     height: 20vh;
-    width: 70%;
+    width: 40%;
 }
 
 .switch {
@@ -306,6 +407,28 @@ input:checked+.slider:before {
     width: 58%;
 }
 
+.btn-name {
+    font-size: 18px;
+}
+
+.btn-emoji {
+    font-size: 25px;
+}
+
+.option-btn {
+    opacity: 1;
+}
+
+.hide-btn {
+    background: none;
+    outline: none;
+    border: none;
+}
+
+#form {
+    height: 0;
+}
+
 .hit-cards {
     z-index: 100;
     position: absolute;
@@ -326,6 +449,12 @@ input:checked+.slider:before {
     align-items: center;
 }
 
+#card-hited {
+    width: 130px;
+    height: 200px;
+    position: fixed;
+}
+
 .deckcards {
     height: 25vh;
     width: 50%;
@@ -333,7 +462,7 @@ input:checked+.slider:before {
     align-items: flex-end;
 }
 
-.enamydeckcards {
+.enemydeckcards {
     height: 25vh;
     width: 50%;
     display: flex;
@@ -355,7 +484,7 @@ input:checked+.slider:before {
 }
 
 #card-InHands,
-#enamy-look {
+#enemy-look {
     width: 130px;
     height: 200px;
     transition: 300ms ease-in-out;
@@ -439,5 +568,110 @@ input:checked+.slider:before {
 
     .links {
         gap: 37px;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .profile-box {
+        width: 40vh;
+    }
+
+    .profile-btn {
+        width: 150px;
+        height: 30px;
+    }
+
+    .w50 {
+        height: 33vh;
+        width: 40vh;
+        padding-bottom: 0;
+    }
+
+    .w50-text {
+        height: 25vh;
+        width: 40vh;
+    }
+
+    .w50-username {
+        height: 40vh;
+        width: 40vh;
+    }
+
+    .usernameChange {
+        height: 160px;
+    }
+
+    .row-profile {
+        flex-direction: column;
+    }
+
+    .rightline-col {
+        flex-direction: row;
+    }
+
+    .imgText {
+        width: 30vh;
+        text-align: center;
+        padding-top: 140px;
+    }
+
+    .rightline {
+        top: unset;
+        width: 100%;
+        height: 50px;
+        background-color: white;
+        position: fixed;
+        bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+
+    .imgText {
+        width: 20vh;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 1341px) {
+
+    .rating-box,
+    .mini-rating-box {
+        width: 110vh;
+    }
+}
+
+@media only screen and (max-width: 1010px) {
+
+    .rating-box,
+    .mini-rating-box {
+        width: 70vh;
+    }
+
+    .hide-info {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1011px) {
+
+    .mini-box-info-hide {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 679px) {
+
+    .rating-box,
+    .mini-rating-box {
+        width: 40vh;
+    }
+}
+
+@media only screen and (max-width: 431px) {
+
+    .rating-box,
+    .mini-rating-box {
+        width: 40vh;
     }
 }

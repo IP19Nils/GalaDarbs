@@ -21,7 +21,7 @@ session_start();
     <div class="container center col">
         <div class="login-box center textCenter col">
 
-            <form id="form">
+            <form id="form" class="center">
 
                 <div id="login" style="display:block">
                     <h1>Sign In</h1>
@@ -39,7 +39,7 @@ session_start();
                     <input type="email" name="GmailForgotPass" class="input-style" placeholder="gmail" required>
                     <input type="text" name="UsernameForgotPass" class="input-style" placeholder="username" required>
                     <input type="password" name="NewPassword" class="input-style" placeholder="New password" required>
-                    <button onclick="getInput('assets/controllers/update.php')" class="btn pointer">Update password</button>
+                    <button onclick="getValue('assets/controllers/update.php')" class="btn pointer">Update password</button>
                     <button onclick="loginForgotPass()" class="link">Sing In</button>
                 </div>
 
@@ -56,11 +56,11 @@ session_start();
                         <iconify-icon class="eye pointer" onclick="showHide()" icon="mdi:eye-outline"></iconify-icon>
                     </div>
                     <input type="password" name="reapetPasswdRegister" class="input-style" placeholder="Reapet password" required>
-                    <button onclick="getInput('assets/controllers/insert.php')" class="btn pointer">Register</button>
+                    <button onclick="getValue('assets/controllers/insert.php')" class="btn pointer">Register</button>
                     <p id="strong"></p>
                     <button onclick="loginRegister()" class="link">Sign In</button>
                 </div>
-                <div id="msg"></div>
+                <div id="msg" class="color-w"></div>
             </form>
         </div>
     </div>

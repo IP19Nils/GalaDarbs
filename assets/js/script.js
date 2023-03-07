@@ -20,6 +20,24 @@ function getInput(inputSet) {
     xmlhttp.send(formData);
 }
 
+function getValue(inputSet) {
+
+    event.preventDefault();
+
+    let msg = document.getElementById('msg');
+    let form = document.getElementById('form');
+    let formData = new FormData(form);
+
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            msg.innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("POST", inputSet, true);
+    xmlhttp.send(formData);
+}
+
 function loginRegister() {
 
     let x = document.getElementById("login");
@@ -57,6 +75,17 @@ function loginForgotPass() {
         i.style.display = "none";
     }
 }
+
+function changeUsername() {
+
+    let i = document.getElementById("showUp");
+    if (i.style.display === "none") {
+        i.style.display = "block";
+    } else {
+        i.style.display = "none";
+    }
+}
+
 
 function strongPass(password) {
     let l = 0;

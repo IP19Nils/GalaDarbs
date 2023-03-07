@@ -11,8 +11,8 @@ $reapetPasswd = $_POST['reapetPasswdRegister'];
 $hashPass = password_hash($passwd, PASSWORD_DEFAULT);
 $uppercase = preg_match('@[A-Z]@', $passwd);
 $lowercase = preg_match('@[a-z]@', $passwd);
-$number    = preg_match('@[0-9]@', $passwd);
-$symbol    = preg_match('@[^A-Za-z0-8]@', $passwd);
+$number = preg_match('@[0-9]@', $passwd);
+$symbol = preg_match('@[^A-Za-z0-8]@', $passwd);
 
 
 
@@ -25,19 +25,19 @@ if (!empty($name || $surname || $gmail || $username || $passwd || $reapetPasswd)
                         if (!empty($reapetPasswd)) {
                             if ($passwd == $reapetPasswd) {
                                 if (!$lowercase) {
-                                    echo "Parolej jasatur mazie burti";
+                                    echo "Parolei jasatur mazie burti";
                                 } else {
                                     if (!$uppercase) {
-                                        echo "Parolej jasatur lielie burti";
+                                        echo "Parolei jasatur lielie burti";
                                     } else {
                                         if (!$number) {
-                                            echo "Parolej jasatur cipari";
+                                            echo "Parolei jasatur cipari";
                                         } else {
                                             if (!$symbol) {
-                                                echo "Parolej jasatur simboli";
+                                                echo "Parolei jasatur simboli";
                                             } else {
                                                 if (strlen($passwd) < 8) {
-                                                    echo "Parolej jabūt vismaz 8 rakstzīmēm";
+                                                    echo "Parolei jabūt vismaz 8 rakstzīmēm";
                                                 } else {
                                                     if (!filter_var($gmail, FILTER_VALIDATE_EMAIL)) {
                                                         echo "Nederīgs e-pasta formāts";
@@ -53,8 +53,8 @@ if (!empty($name || $surname || $gmail || $username || $passwd || $reapetPasswd)
                                                             $text = insert($sql, $conn);
                                                             if ($text === TRUE) {
                                                                 $last_id = $conn->insert_id;
-                                                                $sql = "INSERT INTO userMach(`money`, userID, mach, win, lose, img) 
-                                        VALUE ('1000', '$last_id', '0', '0', '0', 'assets/image/userIcon.png')";
+                                                                $sql = "INSERT INTO userMach(`money`, userID, mach, win, lose, img, lastClick) 
+                                        VALUE ('1000', '$last_id', '0', '0', '0', 'assets/image/userIcon.png', '0000-00-00 00:00:00')";
                                                                 if (insert($sql, $conn) === TRUE) {
                                                                     echo "Veiksmigi izveidots lietotajs.";
                                                                 } else {

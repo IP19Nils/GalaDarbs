@@ -1,31 +1,40 @@
 window.onload = function () {
-  giveCards();
+    giveCards();
 };
 
-let values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
-let symbol = ["C", "D", "H", "S"];
+let values = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
+let symbol = ["C", "D", "H", "S"]
 let deck = [];
 let playerDeck = [];
-let enamyDeck = [];
+let enemyDeck = [];
 let randomCard = [];
 let cardTable = [];
+let cardNumber;
+let cardSymbol;
+let numCardsOnTable;
+let cardCountPlayer = 0;
+let cardCountEnemy = 0;
 let playerTurn = true;
-let enamyTurn = false;
-let enamyHit = false;
 let playerHit = false;
+let playerAccept = false;
+let enemyTurn = false;
+let enemyAccept = false;
+let enemyHit = false;
+
+
 //create a deck
 for (let i = 0; i < 4; i++) {
-  for (let x = 0; x < 13; x++) {
-    deck.push(values[x] + "-" + symbol[i]);
-  }
+    for (let x = 0; x < 13; x++) {
+        deck.push(values[x] + "-" + symbol[i]);
+    }
 }
 
 //shuffle a deck
 for (let i = 0; i < deck.length; i++) {
-  let x = Math.floor(Math.random() * deck.length);
-  let temp = deck[i];
-  deck[i] = deck[x];
-  deck[x] = temp;
+    let x = Math.floor(Math.random() * deck.length);
+    let temp = deck[i];
+    deck[i] = deck[x];
+    deck[x] = temp;
 }
 
 //print out in console
@@ -33,472 +42,593 @@ console.log(deck);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//give card to player and enamy
+//give card to player and enemy
 function giveCards() {
-  //create trupju tuzi
-  for (let i = 0; i < 1; i++) {
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = "assets/cardimg/" + card + ".png";
-    cardImg.id = "maste";
-    cardImg.dataset.value = card;
-    document.getElementById("w20").append(cardImg);
-    randomCard.push(card);
-  }
-  console.log(randomCard);
+    //create trupju tuzi
+    for (let i = 0; i < 1; i++) {
+        let cardImg = document.createElement("img");
+        let card = deck.pop();
+        cardNumber = !isNaN(card.charAt(0)) ? parseInt(card.substring(0, card.search("-"))) : card.substring(0, card.search("-"));
+        cardSymbol = card.charAt(card.length - 1)
+        cardImg.src = "assets/cardimg/" + card + ".png";
+        cardImg.id = "maste";
+        cardImg.dataset.value = card;
+        document.getElementById("w20").append(cardImg);
+        randomCard.push(card);
+        console.log(cardNumber);
+        console.log(cardSymbol);
+    }
+    console.log(randomCard);
 
-  //create player deck
-  for (let i = 0; i < 6; i++) {
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = "assets/cardimg/" + card + ".png";
-    cardImg.id = "card-InHands";
-    cardImg.dataset.value = card;
-    document.getElementById("player-cards").append(cardImg);
-    playerDeck.push(card);
-  }
+    if (cardSymbol === "C") {
+        cardSymbol > "D";
+        cardSymbol > "H";
+        cardSymbol > "S";
+    } else if (cardSymbol === "D") {
+        cardSymbol > "C";
+        cardSymbol > "H";
+        cardSymbol > "S";
+    } else if (cardSymbol === "H") {
+        cardSymbol > "C";
+        cardSymbol > "D";
+        cardSymbol > "S";
+    } else if (cardSymbol === "S") {
+        cardSymbol > "C";
+        cardSymbol > "H";
+        cardSymbol > "D";
+    }
 
-  //print player card
-  console.log(playerDeck);
-  console.log("speletaja karsu daudzums " + playerDeck.length);
+    //create player deck
+    for (let i = 0; i < 6; i++) {
+        let cardImg = document.createElement("img");
+        let card = deck.pop();
+        cardImg.src = "assets/cardimg/" + card + ".png";
+        cardImg.id = "card-InHands";
+        cardImg.dataset.value = card;
+        document.getElementById("player-cards").append(cardImg);
+        playerDeck.push(card);
+    }
 
-  //get eqaul player card
-  let equal = getEquals(playerDeck);
-  console.log(equal);
+    //print player card
+    console.log(playerDeck);
+    console.log("speletaja karsu daudzums " + playerDeck.length);
 
-  //drop player card on table
-  let playerCards = document.querySelectorAll("#card-InHands");
-  let table = document.getElementById("placed-cards");
-  let tableHit = document.getElementById("hit-cards");
-  let playerPrevOnTable = "";
-  let playerCardNum = "";
-  let playerCardSym = "";
-  for (i of playerCards) {
-    i.addEventListener("click", function () {
+    //get eqaul player card
+    let equal = getEquals(playerDeck);
+    console.log(equal);
 
-      if (playerTurn === false && playerHit === true) {
-        console.log(this.dataset.value);
-        playerPrevOnTable = this.dataset.value;
+    //drop player card on table
+    let playerCards = document.querySelectorAll("#card-InHands");
+    let table = document.getElementById("placed-cards");
+    let tableHit = document.getElementById("hit-cards");
+    let playerPrevOnTable = "";
+    let playerCardNum = "";
+    let playerCardSym = "";
+    let playerStuff;
+    for (i of playerCards) {
+        i.addEventListener("click", playerStuff = function playerFunction() {
+            if (playerTurn === false && playerHit === true) {
+                console.log(this.dataset.value);
+                playerPrevOnTable = this.dataset.value;
 
-        playerCardNum = playerPrevOnTable.substring(0, playerPrevOnTable.search("-"));
-        playerCardSym = playerPrevOnTable.charAt(playerPrevOnTable.length - 1);
-        console.log(playerCardNum);
-        console.log(playerCardSym);
+                playerCardNum = !isNaN(playerPrevOnTable.charAt(0)) ? parseInt(playerPrevOnTable.substring(0, playerPrevOnTable.search("-"))) : playerPrevOnTable.substring(0, playerPrevOnTable.search("-"));
 
-        if (playerCardNum > enamyCardNum && enamyCardSym == playerCardSym) {
+                if (playerCardNum === "A") {
+                    playerCardNum = "14";
+                } else if (playerCardNum === "K") {
+                    playerCardNum = "13";
+                } else if (playerCardNum === "Q") {
+                    playerCardNum = "12";
+                } else if (playerCardNum === "J") {
+                    playerCardNum = "11";
+                }
+
+                // playerCardNum = playerPrevOnTable.substring(0, playerPrevOnTable.search("-"));
+                playerCardSym = playerPrevOnTable.charAt(playerPrevOnTable.length - 1);
+                console.log(playerCardNum);
+                console.log(playerCardSym);
+
+                if (playerCardSym == cardSymbol && enemyCardSym == cardSymbol && playerCardNum > enemyCardNum || playerCardNum > enemyCardNum && playerCardSym == enemyCardSym || playerCardSym == cardSymbol && enemyCardSym != cardSymbol) {
+
+                    if (cardCountEnemy <= 0) {
+                        console.log("Nav vairāk kāršu ko sist");
+                    } else {
+                        tableHit.append(this);
+                        this.id = "none";
+                        cardCountEnemy--;
+
+                        cardTable.push(this.dataset.value);
+                        console.log(cardTable);
+                        for (let j = 0; j < playerDeck.length; j++) {
+                            if (playerDeck[j] == this.dataset.value) {
+                                playerDeck.splice(j, 1);
+                            }
+                        }
+                    }
+                } else {
+                    console.log("mazāks");
+                }
+
+            } else if (playerTurn === true && playerHit === false) {
+                if (playerPrevOnTable == "" || playerPrevOnTable.substring(0, playerPrevOnTable.search("-")) == this.dataset.value.substring(0, this.dataset.value.search("-")) || playerCardNum == enemyCardNum) {
+
+                    cardCountPlayer = cardCountPlayer + 1;
+                    console.log(cardCountPlayer);
+
+                    for (let j = 0; j < playerDeck.length; j++) {
+                        if (playerDeck[j] == this.dataset.value) {
+                            playerDeck.splice(j, 1);
+                        }
+                    }
 
 
-          tableHit.append(this);
-          this.id = "none";
 
+                    console.log(this.dataset.value);
+                    playerPrevOnTable = this.dataset.value;
+                    playerCardNum = !isNaN(playerPrevOnTable.charAt(0)) ? parseInt(playerPrevOnTable.substring(0, playerPrevOnTable.search("-"))) : playerPrevOnTable.substring(0, playerPrevOnTable.search("-"));
 
-          cardTable.push(this.dataset.value);
-          console.log(cardTable);
-          for (let j = 0; j < playerDeck.length; j++) {
-            if (playerDeck[j] == this.dataset.value) {
-              playerDeck.splice(j, 1);
+                    if (playerCardNum === "A") {
+                        playerCardNum = "14";
+                    } else if (playerCardNum === "K") {
+                        playerCardNum = "13";
+                    } else if (playerCardNum === "Q") {
+                        playerCardNum = "12";
+                    } else if (playerCardNum === "J") {
+                        playerCardNum = "11";
+                    }
+
+                    // playerCardNum = playerPrevOnTable.substring(0, playerPrevOnTable.search("-"));
+                    playerCardSym = playerPrevOnTable.charAt(playerPrevOnTable.length - 1);
+                    console.log(playerCardNum);
+                    console.log(playerCardSym);
+                    console.log(playerDeck);
+
+                    table.append(this);
+                    this.id = "none";
+                    cardTable.push(this.dataset.value);
+                    console.log(cardTable);
+                    this.removeEventListener('click', playerFunction);
+                }
+            } else {
+                return;
             }
-          }
-        } else {
-          console.log("mazāks");
+        });
+    }
+
+    console.log(playerTurn);
+    //end playerTurn
+    let endPlayerTurn = document.getElementById("endPlayerTurn");
+    endPlayerTurn.addEventListener("click", function () {
+        if (playerTurn === true && enemyHit === false) {
+            enemyTurn = false;
+            enemyHit = true;
+            playerTurn = false;
+            playerHit = false;
+            console.log(playerTurn);
+            let result = findHihgest(cardTable, enemyDeck);
+            console.log(result);
+            enemyPrevOnTable = "";
+            playerPrevOnTable = "";
         }
-
-      } else if (playerTurn === true && playerHit === false) {
-        if (playerPrevOnTable == "" || playerPrevOnTable.substring(0, playerPrevOnTable.search("-")) == this.dataset.value.substring(0, this.dataset.value.search("-")) || playerCardNum == enamyCardNum) {
-          table.append(this);
-
-          this.id = "none";
-
-          for (let j = 0; j < playerDeck.length; j++) {
-            if (playerDeck[j] == this.dataset.value) {
-              playerDeck.splice(j, 1);
-            }
-          }
-
-          console.log(this.dataset.value);
-
-          playerPrevOnTable = this.dataset.value;
-
-
-          playerCardNum = playerPrevOnTable.substring(0, playerPrevOnTable.search("-"));
-          playerCardSym = playerPrevOnTable.charAt(playerPrevOnTable.length - 1);
-          console.log(playerCardNum);
-          console.log(playerCardSym);
-          console.log(playerDeck);
-          cardTable.push(this.dataset.value);
-          console.log(cardTable);
-        }
-      } else {
-        return;
-      }
     });
-  }
 
+    //player accept enemy hit
+    let playerHitedCards = document.getElementById("playerHited");
+    playerHitedCards.addEventListener("click", function () {
+        if (playerAccept == true) {
+            enemyTurn = true;
+            enemyHit = false;
+            playerTurn = false;
+            playerHit = false;
 
-  console.log(playerTurn);
-  //end playerTurn
-  let endPlayerTurn = document.getElementById("endPlayerTurn");
-  endPlayerTurn.addEventListener("click", function () {
-    if (playerTurn === true && enamyHit === false) {
-      enamyTurn = false;
-      enamyHit = true;
-      playerTurn = false;
-      playerHit = false;
-      console.log(playerTurn);
-      let result = findHihgest(cardTable, enamyDeck);
-      console.log(result);
-    }
-  });
-
-  //player accept enmay hit
-  let playerHitedCards = document.getElementById("playerHited");
-  playerHitedCards.addEventListener("click", function () {
-    if (playerTurn === true && playerHit === false) {
-      enamyTurn = true;
-      enamyHit = false;
-      playerTurn = false;
-      playerHit = false;
-
-      while (cardTable.length) {
-        cardTable.pop();
-      }
-      let noneCard = document.querySelector("#none");
-      console.log(cardTable);
-      let hitedCard = document.getElementById("hited");;
-      hitedCard.append(noneCard);
-
-      enamyPrevOnTable = "";
-
-      // // if cards in hands is less than 6, automatically add more cards
-      if (enamyDeck.length < 6) {
-        for (let i = 0; i < 6 - enamyDeck.length; i++) {
-          let cardImg = document.createElement("img");
-          let card = deck.pop();
-          cardImg.src = "assets/cardimg/" + card + ".png";
-          cardImg.id = "enamy-look";
-          cardImg.dataset.value = card;
-          document.getElementById("enamy-cards").append(cardImg);
-          enamyDeck.push(card);
-          console.log(enamyDeck);
-        }
-      } else {
-        console.log("lenght=>6");
-      }
-
-      // if cards in hands is less than 6, automatically add more cards
-      if (playerDeck.length < 6) {
-        for (let i = 0; i < 6 - playerDeck.length; i++) {
-          let cardImg = document.createElement("img");
-          let card = deck.pop();
-          cardImg.src = "assets/cardimg/" + card + ".png";
-          cardImg.id = "card-InHands";
-          cardImg.dataset.value = card;
-          document.getElementById("player-cards").append(cardImg);
-          playerDeck.push(card);
-          console.log(playerDeck);
-        }
-      } else {
-        console.log("lenght=>6");
-      }
-
-      console.log(deck);
-    }
-  });
-
-  //player pick up
-  let playerPickUp = document.getElementById("playerPickUp");
-  let playerTableCard = document.getElementById("player-cards");
-
-  playerPickUp.addEventListener("click", function () {
-    if (playerTurn === false && playerHit === true) {
-
-      let noneCard = document.getElementById("none");
-      playerTableCard.append(noneCard);
-
-      playerDeck = playerDeck.concat(cardTable);
-      console.log(playerDeck);
-      console.log(noneCard);
-      noneCard.id = "card-InHands";
-
-      enamyTurn = true;
-      enamyHit = false;
-      playerTurn = false;
-      playerHit = false;
-
-      playerPrevOnTable = "";
-
-      // // if cards in hands is less than 6, automatically add more cards
-      if (enamyDeck.length < 6) {
-        for (let i = 0; i < 6 - enamyDeck.length; i++) {
-          let cardImg = document.createElement("img");
-          let card = deck.pop();
-          cardImg.src = "assets/cardimg/" + card + ".png";
-          cardImg.id = "enamy-look";
-          cardImg.dataset.value = card;
-          document.getElementById("enamy-cards").append(cardImg);
-          enamyDeck.push(card);
-          console.log(enamyDeck);
-        }
-      } else {
-        console.log("lenght=>6");
-      }
-    }
-  });
-
-  //player hit end
-  let playerHitCards = document.getElementById("playerHit");
-  playerHitCards.addEventListener("click", function () {
-    enamyTurn = true;
-    enamyHit = false;
-    playerTurn = false;
-    playerHit = false;
-  });
-
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // create enamy deack
-  for (let i = 0; i < 6; i++) {
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = "assets/cardimg/" + card + ".png";
-    cardImg.id = "enamy-look";
-    cardImg.dataset.value = card;
-    document.getElementById("enamy-cards").append(cardImg);
-    enamyDeck.push(card);
-  }
-
-  //print enamy cards
-  console.log(enamyDeck);
-  console.log("pretinieka karšu daudzums " + enamyDeck.length);
-
-  //get eqaul enamy card
-  let EnamyEqual = getEquals(enamyDeck);
-  console.log(EnamyEqual);
-
-  //drop enamy card on table
-  let enamyCards = document.querySelectorAll("#enamy-look");
-  let enamyPrevOnTable = "";
-  let enamyCardNum = "";
-  let enamyCardSym = "";
-
-  for (i of enamyCards) {
-    i.addEventListener("click", function () {
-
-      if (enamyTurn === false && enamyHit === true) {
-        console.log(this.dataset.value);
-        enamyPrevOnTable = this.dataset.value;
-
-
-        enamyCardNum = enamyPrevOnTable.substring(0, enamyPrevOnTable.search("-"));
-        enamyCardSym = enamyPrevOnTable.charAt(enamyPrevOnTable.length - 1);
-        console.log(enamyCardNum);
-        console.log(enamyCardSym);
-
-        if (enamyCardNum > playerCardNum && enamyCardSym == playerCardSym) {
-
-
-          tableHit.append(this);
-          this.id = "none";
-
-
-          cardTable.push(this.dataset.value);
-          console.log(cardTable);
-          for (let j = 0; j < enamyDeck.length; j++) {
-            if (enamyDeck[j] == this.dataset.value) {
-              enamyDeck.splice(j, 1);
+            while (cardTable.length) {
+                cardTable.pop();
             }
-          }
-        } else {
-          console.log("mazāks");
-        }
 
-      } else if (enamyTurn === true && enamyHit === false) {
 
-        if (enamyPrevOnTable == "" || enamyPrevOnTable.substring(0, enamyPrevOnTable.search("-")) == this.dataset.value.substring(0, this.dataset.value.search("-"))) {
-          table.append(this);
-          this.id = "none";
-
-          for (let j = 0; j < enamyDeck.length; j++) {
-            if (enamyDeck[j] == this.dataset.value) {
-              enamyDeck.splice(j, 1);
+            let noneCard = document.querySelectorAll("#none");
+            let hitedCard = document.getElementById("hited");
+            for (let i = 0; i < noneCard.length; i++) {
+                hitedCard.appendChild(noneCard[i]).id = "card-hited";
             }
-          }
-          console.log(this.dataset.value);
-          console.log(enamyDeck);
 
-          enamyPrevOnTable = this.dataset.value;
+            console.log(cardTable);
+
+            enemyPrevOnTable = "";
+            playerPrevOnTable = "";
 
 
-          enamyCardNum = enamyPrevOnTable.substring(0, enamyPrevOnTable.search("-"));
-          enamyCardSym = enamyPrevOnTable.charAt(enamyPrevOnTable.length - 1);
-          console.log(enamyCardNum);
-          console.log(enamyCardSym);
-          console.log(enamyDeck);
-          cardTable.push(this.dataset.value);
-          console.log(cardTable);
+            // // if cards in hands is less than 6, automatically add more cards
+            if (enemyDeck.length < 6) {
+                for (let i = 0; i < (6 - enemyDeck.length); i++) {
+                    let cardImg = document.createElement("img");
+                    let card = deck.pop();
+                    cardImg.src = "assets/cardimg/" + card + ".png";
+                    cardImg.id = "enemy-look";
+                    cardImg.dataset.value = card;
+                    document.getElementById("enemy-cards").append(cardImg);
+                    cardImg.addEventListener("click", enemyStuff);
+                    enemyDeck.push(card);
+                    console.log(enemyDeck);
+                }
+            } else {
+                console.log("lenght=>6");
+            }
+
+            // if cards in hands is less than 6, automatically add more cards
+            if (playerDeck.length < 6) {
+                for (let i = 0; i < 6 - playerDeck.length; i++) {
+                    let cardImg = document.createElement("img");
+                    let card = deck.pop();
+                    cardImg.src = "assets/cardimg/" + card + ".png";
+                    cardImg.id = "card-InHands";
+                    cardImg.dataset.value = card;
+                    document.getElementById("player-cards").append(cardImg);
+                    cardImg.addEventListener("click", playerStuff);
+                    playerDeck.push(card);
+                    console.log(playerDeck);
+                }
+            } else {
+                console.log("lenght=>6");
+            }
+
+            console.log(deck);
         }
-      } else {
-        return;
-      }
     });
-  }
 
+    //player pick up
+    let playerPickUp = document.getElementById("playerPickUp");
+    let playerTableCard = document.getElementById("player-cards");
 
-  //enamy pick up
-  let enamyPickUp = document.getElementById("enamyPickUp");
-  let enamyTableCard = document.getElementById("enamy-cards");
+    playerPickUp.addEventListener("click", function () {
+        if (playerTurn === false && playerHit === true) {
+            let noneCard = document.querySelectorAll("#none");
 
-  enamyPickUp.addEventListener("click", function () {
-    if (enamyTurn === false && enamyHit === true) {
-      let noneCard = document.getElementById("none");
-      enamyTableCard.append(noneCard);
+            for (let i = 0; i < noneCard.length; i++) {
+                playerTableCard.appendChild(noneCard[i]).id = "card-InHands";
 
-      enamyDeck = enamyDeck.concat(cardTable);
-      console.log(enamyDeck);
-      console.log(noneCard);
-      noneCard.id = "enamy-look";
+                playerDeck = playerDeck.concat(cardTable);
+                console.log(playerDeck);
 
-      enamyTurn = false;
-      enamyHit = false;
-      playerTurn = true;
-      playerHit = false;
+                enemyTurn = true;
+                enemyHit = false;
+                playerTurn = false;
+                playerHit = false;
 
+                cardCountEnemy = 0;
 
-      // if cards in hands is less than 6, automatically add more cards
-      if (playerDeck.length < 6) {
-        for (let i = 0; i < 6 - playerDeck.length; i++) {
-          let cardImg = document.createElement("img");
-          let card = deck.pop();
-          cardImg.src = "assets/cardimg/" + card + ".png";
-          cardImg.id = "card-InHands";
-          cardImg.dataset.value = card;
-          document.getElementById("player-cards").append(cardImg);
-          playerDeck.push(card);
-          console.log(playerDeck);
+                enemyPrevOnTable = "";
+                playerPrevOnTable = "";
+
+                // if cards in hands is less than 6, automatically add more cards
+                if (enemyDeck.length < 6) {
+                    for (let i = 0; i < 6 - enemyDeck.length; i++) {
+                        let cardImg = document.createElement("img");
+                        let card = deck.pop();
+                        cardImg.src = "assets/cardimg/" + card + ".png";
+                        cardImg.id = "enemy-look";
+                        cardImg.dataset.value = card;
+                        document.getElementById("enemy-cards").append(cardImg);
+                        cardImg.addEventListener("click", enemyStuff);
+                        enemyDeck.push(card);
+                        console.log(enemyDeck);
+                    }
+                } else {
+                    console.log("lenght=>6");
+                }
+            }
         }
-      } else {
-        console.log("lenght=>6");
-      }
+    });
+
+    //player hit end
+    let playerHitCards = document.getElementById("playerHit");
+    playerHitCards.addEventListener("click", function () {
+        enemyTurn = true;
+        enemyHit = false;
+        enemyAccept = true;
+        playerTurn = false;
+        playerHit = false;
+
+
+        enemyPrevOnTable = "";
+        playerPrevOnTable = "";
+    });
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // create enemy deack
+    for (let i = 0; i < 6; i++) {
+        let cardImg = document.createElement("img");
+        let card = deck.pop();
+        cardImg.src = "assets/cardimg/" + card + ".png";
+        cardImg.id = "enemy-look";
+        cardImg.dataset.value = card;
+        document.getElementById("enemy-cards").append(cardImg);
+        enemyDeck.push(card);
     }
-  });
 
-  //end enamyTurn
-  let endEnamyTurn = document.getElementById("endEnamyTurn");
-  endEnamyTurn.addEventListener("click", function () {
-    if (enamyTurn === true && enamyHit === false) {
-      enamyTurn = false;
-      enamyHit = false;
-      playerTurn = false;
-      playerHit = true;
-      console.log(enamyTurn);
-      playerPrevOnTable = "";
+    //print enemy cards
+    console.log(enemyDeck);
+    console.log("pretinieka karšu daudzums " + enemyDeck.length);
+
+    //get eqaul enemy card
+    let enemyEqual = getEquals(enemyDeck);
+    console.log(enemyEqual);
+
+    //drop enemy card on table
+    let enemyCards = document.querySelectorAll("#enemy-look");
+    let enemyPrevOnTable = "";
+    let enemyCardNum = "";
+    let enemyCardSym = "";
+    let enemyStuff;
+    for (i of enemyCards) {
+        i.addEventListener("click", enemyStuff = function enemyFunction() {
+
+            if (enemyTurn === false && enemyHit === true) {
+                console.log(this.dataset.value);
+                enemyPrevOnTable = this.dataset.value;
+
+                enemyCardNum = !isNaN(enemyPrevOnTable.charAt(0)) ? parseInt(enemyPrevOnTable.substring(0, enemyPrevOnTable.search("-"))) : enemyPrevOnTable.substring(0, enemyPrevOnTable.search("-"));
+
+
+                if (enemyCardNum === "A") {
+                    enemyCardNum = "14";
+                } else if (enemyCardNum === "K") {
+                    enemyCardNum = "13";
+                } else if (enemyCardNum === "Q") {
+                    enemyCardNum = "12";
+                } else if (enemyCardNum === "J") {
+                    enemyCardNum = "11";
+                }
+
+                // enemyCardNum = enemyPrevOnTable.substring(0, enemyPrevOnTable.search("-"));
+                enemyCardSym = enemyPrevOnTable.charAt(enemyPrevOnTable.length - 1);
+                console.log(enemyCardNum);
+                console.log(enemyCardSym);
+                if (enemyCardSym == cardSymbol && playerCardSym == cardSymbol && enemyCardNum > playerCardNum || enemyCardNum > playerCardNum && enemyCardSym == playerCardSym || enemyCardSym == cardSymbol && playerCardSym != cardSymbol) {
+
+                    if (cardCountPlayer <= 0) {
+                        console.log("Nav vairāk kāršu ko sist");
+                    } else {
+                        tableHit.append(this);
+                        this.id = "none";
+                        cardCountPlayer--;
+
+                        cardTable.push(this.dataset.value);
+                        console.log(cardTable);
+                        for (let j = 0; j < enemyDeck.length; j++) {
+                            if (enemyDeck[j] == this.dataset.value) {
+                                enemyDeck.splice(j, 1);
+                            }
+                        }
+                    }
+                } else {
+                    console.log("mazāks");
+                }
+            } else if (enemyTurn === true && enemyHit === false) {
+                if (enemyPrevOnTable == "" || enemyPrevOnTable.substring(0, enemyPrevOnTable.search("-")) == this.dataset.value.substring(0, this.dataset.value.search("-")) || playerCardNum == enemyCardNum) {
+
+                    cardCountEnemy = cardCountEnemy + 1;
+                    console.log(cardCountEnemy);
+
+                    for (let j = 0; j < enemyDeck.length; j++) {
+                        if (enemyDeck[j] == this.dataset.value) {
+                            enemyDeck.splice(j, 1);
+                        }
+                    }
+
+
+                    this.id = "none";
+                    table.append(this);
+
+                    console.log(this.dataset.value);
+                    console.log(enemyDeck);
+
+                    enemyPrevOnTable = this.dataset.value;
+
+                    enemyCardNum = !isNaN(enemyPrevOnTable.charAt(0)) ? parseInt(enemyPrevOnTable.substring(0, enemyPrevOnTable.search("-"))) : enemyPrevOnTable.substring(0, enemyPrevOnTable.search("-"));
+
+                    if (enemyCardNum === "A") {
+                        enemyCardNum = "14";
+                    } else if (enemyCardNum === "K") {
+                        enemyCardNum = "13";
+                    } else if (enemyCardNum === "Q") {
+                        enemyCardNum = "12";
+                    } else if (enemyCardNum === "J") {
+                        enemyCardNum = "11";
+                    }
+
+                    // enemyCardNum = enemyPrevOnTable.substring(0, enemyPrevOnTable.search("-"));
+                    enemyCardSym = enemyPrevOnTable.charAt(enemyPrevOnTable.length - 1);
+                    console.log(enemyCardNum);
+                    console.log(enemyCardSym);
+                    console.log(enemyDeck);
+                    cardTable.push(this.dataset.value);
+                    console.log(cardTable);
+                    this.removeEventListener('click', enemyFunction);
+                }
+            } else {
+                return;
+            }
+        });
     }
-  });
 
-  //enamy hit end
-  let enamyHitCards = document.getElementById("enamyHit");
-  enamyHitCards.addEventListener("click", function () {
-    enamyTurn = false;
-    enamyHit = false;
-    playerTurn = true;
-    playerHit = false;
-  });
 
-  //enamy accept enmay hit
-  let enamyHitedCards = document.getElementById("enamyHited");
-  enamyHitedCards.addEventListener("click", function () {
-    if (enamyTurn === true && enamyHit === false) {
-      enamyTurn = false;
-      enamyHit = false;
-      playerTurn = true;
-      playerHit = false;
-      while (cardTable.length) {
-        cardTable.pop();
-      }
-      let noneCard = document.querySelector("#none");
-      console.log(cardTable);
-      let hitedCard = document.getElementById("hited");;
-      hitedCard.append(noneCard);
+    //enemy pick up
+    let enemyPickUp = document.getElementById("enemyPickUp");
+    let enemyTableCard = document.getElementById("enemy-cards");
 
-      enamyPrevOnTable = "";
+    enemyPickUp.addEventListener("click", function () {
+        if (enemyTurn === false && enemyHit === true) {
+            let noneCard = document.querySelectorAll("#none");
+            for (let i = 0; i < noneCard.length; i++) {
+                enemyTableCard.appendChild(noneCard[i]).id = "enemy-look";
 
-      // // if cards in hands is less than 6, automatically add more cards
-      if (enamyDeck.length < 6) {
-        for (let i = 0; i < 6 - enamyDeck.length; i++) {
-          let cardImg = document.createElement("img");
-          let card = deck.pop();
-          cardImg.src = "assets/cardimg/" + card + ".png";
-          cardImg.id = "enamy-look";
-          cardImg.dataset.value = card;
-          document.getElementById("enamy-cards").append(cardImg);
-          enamyDeck.push(card);
-          console.log(enamyDeck);
+                enemyDeck = enemyDeck.concat(cardTable);
+                console.log(enemyDeck);
+
+
+
+                enemyTurn = false;
+                enemyHit = false;
+                playerTurn = true;
+                playerHit = false;
+                
+                cardCountPlayer = 0;
+
+                enemyPrevOnTable = "";
+                playerPrevOnTable = "";
+
+                if (playerDeck.length < 6) {
+                    for (let i = 0; i < 6 - playerDeck.length; i++) {
+                        let cardImg = document.createElement("img");
+                        let card = deck.pop();
+                        cardImg.src = "assets/cardimg/" + card + ".png";
+                        cardImg.id = "card-InHands";
+                        cardImg.dataset.value = card;
+                        document.getElementById("player-cards").append(cardImg);
+                        cardImg.addEventListener("click", playerStuff);
+                        playerDeck.push(card);
+                        console.log(playerDeck);
+                    }
+                } else {
+                    console.log("lenght=>6");
+                }
+            }
         }
-      } else {
-        console.log("lenght=>6");
-      }
+    });
 
-      // if cards in hands is less than 6, automatically add more cards
-      if (playerDeck.length < 6) {
-        for (let i = 0; i < 6 - playerDeck.length; i++) {
-          let cardImg = document.createElement("img");
-          let card = deck.pop();
-          cardImg.src = "assets/cardimg/" + card + ".png";
-          cardImg.id = "card-InHands";
-          cardImg.dataset.value = card;
-          document.getElementById("player-cards").append(cardImg);
-          playerDeck.push(card);
-          console.log(playerDeck);
+    //end enemyTurn
+    let endenemyTurn = document.getElementById("endenemyTurn");
+    endenemyTurn.addEventListener("click", function () {
+        if (enemyTurn === true && enemyHit === false) {
+            enemyTurn = false;
+            enemyHit = false;
+            playerTurn = false;
+            playerHit = true;
+            console.log(enemyTurn);
+            enemyPrevOnTable = "";
+            playerPrevOnTable = "";
         }
-      } else {
-        console.log("lenght=>6");
-      }
-      console.log(deck);
-    }
-  });
+    });
 
-//surrender
-let endGame = document.getElementById("surr");
-endGame.addEventListener("click", function () {
-    window.location = "menu.php";
-});
+    //enemy hit end
+    let enemyHitCards = document.getElementById("enemyHit");
+    enemyHitCards.addEventListener("click", function () {
+        enemyTurn = false;
+        enemyHit = false;
+        playerTurn = true;
+        playerHit = false;
+        playerAccept = true;
+
+        enemyPrevOnTable = "";
+        playerPrevOnTable = "";
+    });
+
+    //enemy accept player hit
+    let enemyHitedCards = document.getElementById("enemyHited");
+    enemyHitedCards.addEventListener("click", function () {
+        if (enemyAccept == true) {
+            enemyTurn = false;
+            enemyHit = false;
+            playerTurn = true;
+            playerHit = false;
+            while (cardTable.length) {
+                cardTable.pop();
+            }
+
+            let noneCard = document.querySelectorAll("#none");
+            let hitedCard = document.getElementById("hited");
+            for (let i = 0; i < noneCard.length; i++) {
+                hitedCard.appendChild(noneCard[i]).id = "card-hited";
+            }
+
+            console.log(cardTable);
+
+
+            enemyPrevOnTable = "";
+            playerPrevOnTable = "";
+
+            // // if cards in hands is less than 6, automatically add more cards
+            if (enemyDeck.length < 6) {
+                for (let i = 0; i < 6 - enemyDeck.length; i++) {
+                    let cardImg = document.createElement("img");
+                    let card = deck.pop();
+                    cardImg.src = "assets/cardimg/" + card + ".png";
+                    cardImg.id = "enemy-look";
+                    cardImg.dataset.value = card;
+                    document.getElementById("enemy-cards").append(cardImg);
+                    cardImg.addEventListener("click", enemyStuff);
+                    enemyDeck.push(card);
+                    console.log(enemyDeck);
+                }
+            } else {
+                console.log("lenght=>6");
+            }
+
+            // if cards in hands is less than 6, automatically add more cards
+            if (playerDeck.length < 6) {
+                for (let i = 0; i < 6 - playerDeck.length; i++) {
+                    let cardImg = document.createElement("img");
+                    let card = deck.pop();
+                    cardImg.src = "assets/cardimg/" + card + ".png";
+                    cardImg.id = "card-InHands";
+                    cardImg.dataset.value = card;
+                    document.getElementById("player-cards").append(cardImg);
+                    cardImg.addEventListener("click", playerStuff);
+                    playerDeck.push(card);
+                    console.log(playerDeck);
+                }
+            } else {
+                console.log("lenght=>6");
+            }
+            console.log(deck);
+        }
+    });
+
+    //surrender
+    let endGame = document.getElementById("surr");
+    endGame.addEventListener("click", function () {
+        window.location = "menu.php";
+    });
 }
 
 //fuction for geting equal cards
 function getEquals(arr) {
-  let arrPos = 0;
-  let eq = [];
+    let arrPos = 0;
+    let eq = [];
 
-  for (let i = 0; i < arr.length; i++) {
-    let index = 0;
-    for (let j = 0; j < arr.length; j++) {
-      if (arr[i].charAt(0) == arr[j].charAt(0)) {
-        index++;
-        if (index == 2) {
-          eq[arrPos] = arr[i];
-          arrPos++;
+    for (let i = 0; i < arr.length; i++) {
+        let index = 0;
+        for (let j = 0; j < arr.length; j++) {
+            if (arr[i].charAt(0) == arr[j].charAt(0)) {
+                index++;
+                if (index == 2) {
+                    eq[arrPos] = arr[i];
+                    arrPos++;
+                }
+            }
         }
-      }
     }
-  }
 
-  return eq;
+    return eq;
 }
 
 function findHihgest(arr1, arr2) {
-  let result = [];
-  for (let i = 0; i < arr2.length; i++) {
-    let highest = true;
-    for (let j = 0; j < arr1.length; j++) {
-      if (arr2[i] < arr1[j]) {
-        highest = false;
-        break;
-      }
+    let result = [];
+    for (let i = 0; i < arr2.length; i++) {
+        let highest = true;
+        for (let j = 0; j < arr1.length; j++) {
+            if (arr2[i] < arr1[j]) {
+                highest = false;
+                break;
+            }
+        }
+        if (highest) {
+            result.push(arr2[i]);
+        }
     }
-    if (highest) {
-      result.push(arr2[i]);
-    }
-  }
-  return result;
+    return result;
 }
