@@ -20,6 +20,7 @@ function rating($conn)
     if (isset($_POST['win'])) {
         $sql = "SELECT * FROM userData, userMach WHERE userMach.userID=userData.id ORDER BY userMach.win DESC";
         $result = select($sql, $conn);
+        $rating = 1;
         echo "
         <style>
         .lose,
@@ -30,12 +31,13 @@ function rating($conn)
         </style>
         <div class='mini-rating-box hide-info'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Win🏆</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Uzvaras🏆</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
             <div class='mini-rating-box hide-info'>
+            " . $rating++ . "
                 <p class='sort-box'><img src=" . $row['img'] . " alt='Profile Image' style='width: 5vh; height: 5vh; object-fit: cover;'></p>
                 <p class='sort-box'>" . $row['username'] . "</p>
                 <p class='sort-box'>" . $row['win'] . "🏆</p>
@@ -45,6 +47,7 @@ function rating($conn)
     } else if (isset($_POST['lose'])) {
         $sql = "SELECT * FROM userData, userMach WHERE userMach.userID=userData.id ORDER BY userMach.lose DESC";
         $result = select($sql, $conn);
+        $rating = 1;
         echo "
         <style>
         .win,
@@ -55,12 +58,13 @@ function rating($conn)
         </style>
         <div class='mini-rating-box hide-info'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Lose❌</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Zaudes❌</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
             <div class='mini-rating-box hide-info'>
+            " . $rating++ . "
                 <p class='sort-box'><img src=" . $row['img'] . " alt='Profile Image' style='width: 5vh; height: 5vh; object-fit: cover;'></p>
                 <p class='sort-box'>" . $row['username'] . "</p>
                 <p class='sort-box'>" . $row['lose'] . "❌</p>
@@ -70,6 +74,7 @@ function rating($conn)
     } else if (isset($_POST['mach'])) {
         $sql = "SELECT * FROM userData, userMach WHERE userMach.userID=userData.id ORDER BY userMach.mach DESC";
         $result = select($sql, $conn);
+        $rating = 1;
         echo "
         <style>
         .lose,
@@ -80,12 +85,13 @@ function rating($conn)
         </style>
         <div class='mini-rating-box hide-info'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Mach🏅</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Mači🏅</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
             <div class='mini-rating-box hide-info'>
+            " . $rating++ . "
                 <p class='sort-box'><img src=" . $row['img'] . " alt='Profile Image' style='width: 5vh; height: 5vh; object-fit: cover;'></p>
                 <p class='sort-box'>" . $row['username'] . "</p>
                 <p class='sort-box'>" . $row['mach'] . "🏅</p>
@@ -95,6 +101,7 @@ function rating($conn)
     } else if (isset($_POST['money'])) {
         $sql = "SELECT * FROM userData, userMach WHERE userMach.userID=userData.id ORDER BY userMach.money DESC";
         $result = select($sql, $conn);
+        $rating = 1;
         echo "
         <style>
         .lose,
@@ -105,12 +112,13 @@ function rating($conn)
         </style>
         <div class='mini-rating-box hide-info'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Money💵</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Nauda💵</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
             <div class='mini-rating-box hide-info'>
+            " . $rating++ . "
                 <p class='sort-box'><img src=" . $row['img'] . " alt='Profile Image' style='width: 5vh; height: 5vh; object-fit: cover;'></p>
                 <p class='sort-box'>" . $row['username'] . "</p>
                 <p class='sort-box'>" . $row['money'] . "💵</p>
@@ -120,18 +128,20 @@ function rating($conn)
     } else {
         $sql = "SELECT * FROM userData, userMach WHERE userMach.userID=userData.id ORDER BY userData.username ASC";
         $result = select($sql, $conn);
+        $rating = 1;
         echo "
         <div class='rating-box hide-info'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Money💵</p>
-            <p class='sort-box'>Mach🏅</p>
-            <p class='sort-box'>Win🏆</p>
-            <p class='sort-box'>Lose❌</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Nauda💵</p>
+            <p class='sort-box'>Mači🏅</p>
+            <p class='sort-box'>Uzvaras🏆</p>
+            <p class='sort-box'>Zaudes❌</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
             <div class='rating-box hide-info'>
+            " . $rating++ . "
                 <p class='sort-box'><img src=" . $row['img'] . " alt='Profile Image' style='width: 5vh; height: 5vh; object-fit: cover;'></p>
                 <p class='sort-box'>" . $row['username'] . "</p>
                 <p class='sort-box'>" . $row['money'] . "💵</p>
@@ -159,8 +169,8 @@ function rating($conn)
         </style>
         <div class='mini-box-info-hide mini-rating-box'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Win🏆</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Uzvaras🏆</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
@@ -184,8 +194,8 @@ function rating($conn)
         </style>
         <div class='mini-box-info-hide mini-rating-box'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Lose❌</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Zaudes❌</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
@@ -209,8 +219,8 @@ function rating($conn)
         </style>
         <div class='mini-box-info-hide mini-rating-box'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Mach🏅</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Mači🏅</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "
@@ -234,8 +244,8 @@ function rating($conn)
         </style>
         <div class='mini-box-info-hide mini-rating-box'>
             <p class='sort-box'></p>
-            <p class='sort-box'>Username</p>
-            <p class='sort-box'>Money💵</p>
+            <p class='sort-box'>Lietotājvards</p>
+            <p class='sort-box'>Nauda💵</p>
         </div>";
         while ($row = $result->fetch_assoc()) {
             echo "

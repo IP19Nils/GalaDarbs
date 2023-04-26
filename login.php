@@ -21,44 +21,47 @@ session_start();
     <div class="container center col">
         <div class="login-box center textCenter col">
 
-            <form id="form" class="center">
+            <form id="form" class="center col">
 
                 <div id="login" style="display:block">
-                    <h1>Sign In</h1>
-                    <input type="text" name="usernameLog" class="input-style" placeholder="Username or email... " required>
-                    <input type="password" name="passwdLog" class="input-style" placeholder="Password..." required>
-                    <button onclick="getInput('assets/controllers/select.php')" class="btn pointer">Login</button>
+                    <h1>Ienākt</h1>
+                    <input type="text" name="usernameLog" class="input-style" placeholder="Lietotājvārds vai ēpasts... " required>
+                    <input type="password" name="passwdLog" class="input-style" placeholder="Parole..." required>
+                    <button onclick="getInput('assets/controllers/select.php')" class="btn pointer">Ienākt</button>
                     <div class="links">
-                        <button onclick="loginForgotPass()" class="link">Forgot Password</button>
-                        <button onclick="loginRegister()" class="link">Registration</button>
+                        <button onclick="loginForgotPass()" class="link">Aizmirsi paroli</button>
+                        <button onclick="loginRegister()" class="link">Reģistrēties</button>
                     </div>
                 </div>
 
                 <div id="forgotPass" style="display:none">
-                    <h1>Forgot password?</h1>
-                    <input type="email" name="GmailForgotPass" class="input-style" placeholder="gmail" required>
-                    <input type="text" name="UsernameForgotPass" class="input-style" placeholder="username" required>
-                    <input type="password" name="NewPassword" class="input-style" placeholder="New password" required>
-                    <button onclick="getValue('assets/controllers/update.php')" class="btn pointer">Update password</button>
-                    <button onclick="loginForgotPass()" class="link">Sing In</button>
+                    <h1>Aizmirsi paroli?</h1>
+                    <input type="email" name="GmailForgotPass" class="input-style" placeholder="ēpasts" required>
+                    <input type="text" name="UsernameForgotPass" class="input-style" placeholder="Lietotājvards" required>
+                    <input type="password" name="NewPassword" class="input-style" placeholder="Jaunā parole" required>
+                    <button onclick="getValue('assets/controllers/update.php')" class="btn pointer">Atjaunot paroli</button>
+                    <button onclick="loginForgotPass()" class="link">Ienākt</button>
                 </div>
 
-                <div id="registr" onclick="paswordStrenght()" style="display:none">
-                    <h1>Registration</h1>
+                <div id="registr" style="display:none">
+                    <h1>Reģistrēties</h1>
                     <div class="row center">
-                        <input type="text" name="name" class="reg-style" placeholder="Name" required>
-                        <input type="text" name="surname" class="reg-style" placeholder="Surname" required>
+                        <input type="text" name="name" class="reg-style" placeholder="Vārds" required>
+                        <input type="text" name="surname" class="reg-style" placeholder="Uzvārds" required>
                     </div>
                     <input type="email" name="gmailRegister" class="input-style" placeholder="Gmail@gmail.com" required>
-                    <input type="text" name="usernameRegister" class="input-style" placeholder="Username" required>
+                    <input type="text" name="usernameRegister" class="input-style" placeholder="Lietotājvards" required>
                     <div class="pass-eye">
-                        <input type="password" name="passwdRegister" class="input-style" id="password" placeholder="Password" required>
-                        <iconify-icon class="eye pointer" onclick="showHide()" icon="mdi:eye-outline"></iconify-icon>
+                        <input type="password" name="passwdRegister" onclick="paswordStrenght()" class="input-style" id="password" placeholder="Parole" required>
+                        <iconify-icon class="eye pointer" onclick="showHidePasswd()" icon="mdi:eye-outline"></iconify-icon>
                     </div>
-                    <input type="password" name="reapetPasswdRegister" class="input-style" placeholder="Reapet password" required>
-                    <button onclick="getValue('assets/controllers/insert.php')" class="btn pointer">Register</button>
+                    <div class="pass-eye">
+                        <input type="password" name="reapetPasswdRegister" class="input-style" id="repeatPassword" placeholder="Atkartot paroli" required>
+                        <iconify-icon class="eye pointer" onclick="showHideRepeatPasswd()" icon="mdi:eye-outline"></iconify-icon>
+                    </div>
+                    <button onclick="getValue('assets/controllers/insert.php')" class="btn pointer">Reģistrēties</button>
                     <p id="strong"></p>
-                    <button onclick="loginRegister()" class="link">Sign In</button>
+                    <button onclick="loginRegister()" class="link">Pievienoties</button>
                 </div>
                 <div id="msg" class="color-w"></div>
             </form>

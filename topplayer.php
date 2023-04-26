@@ -24,25 +24,25 @@ include "assets/controllers/rightline.php";
                 <button class="option-btn hide-btn pointer money" id="option-btn" name="money">
                     <div class="col">
                         <p class="btn-emoji">💲</p>
-                        <p class="btn-name">Money</p>
+                        <p class="btn-name">Nauda</p>
                     </div>
                 </button>
                 <button class="option-btn hide-btn pointer win" id="option-btn" name="win">
                     <div class="col">
                         <p class="btn-emoji">🏆</p>
-                        <p class="btn-name">Win</p>
+                        <p class="btn-name">Uzvaras</p>
                     </div>
                 </button>
                 <button class="option-btn hide-btn pointer mach" id="option-btn" name="mach">
                     <div class="col">
                         <p class="btn-emoji">🏅</p>
-                        <p class="btn-name">Mach</p>
+                        <p class="btn-name">Mači</p>
                     </div>
                 </button>
                 <button class="option-btn hide-btn pointer lose" id="option-btn" name="lose">
                     <div class="col">
                         <p class="btn-emoji">❌</p>
-                        <p class="btn-name">Lose</p>
+                        <p class="btn-name">Zaudes</p>
                     </div>
                 </button>
             </div>

@@ -14,12 +14,18 @@ if (!empty($username || $passwd)) {
                 while ($row = $result->fetch_assoc()) {
                     $usernameRow = $row['username'];
                     $gmailRow = $row['gmail'];
-                    if ($username == $usernameRow && password_verify($passwd, $row['passwd']) || $username == $gmailRow && password_verify($passwd, $row['passwd'])) {
-                        $_SESSION['id'] = $row['id'];
-                        $_SESSION['logedIn'] = true;
-                        echo "true";
+                    $verified = $row['verified'];
+                    $time = $row['registered'];
+                    if ($verified) {
+                        if ($username == $usernameRow && password_verify($passwd, $row['passwd']) || $username == $gmailRow && password_verify($passwd, $row['passwd'])) {
+                            $_SESSION['id'] = $row['id'];
+                            $_SESSION['logedIn'] = true;
+                            echo "true";
+                        } else {
+                            echo "Parole vai lietotaj vārds ir ievadīts nepareizi";
+                        }
                     } else {
-                        echo "Parole vai lietotaj vārds ir ievadīts nepareizi";
+                        echo "Lūdzu verificējiet savu kontu";
                     }
                 }
             } else {

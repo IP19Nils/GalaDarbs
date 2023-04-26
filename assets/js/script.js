@@ -130,7 +130,7 @@ function paswordStrenght() {
     })
 }
 
-function showHide() {
+function showHidePasswd() {
     let passwd = document.querySelector('#password');
     if (passwd.type === 'password') {
         passwd.setAttribute('type', 'text');
@@ -139,3 +139,21 @@ function showHide() {
     }
 }
 
+function showHideRepeatPasswd() {
+    let passwd = document.querySelector('#repeatPassword');
+    if (passwd.type === 'password') {
+        passwd.setAttribute('type', 'text');
+    } else {
+        passwd.setAttribute('type', 'password');
+    }
+}
+
+function playerCount() {
+    const value = document.querySelector("#value")
+    const player = document.querySelector("#player")
+    value.textContent = player.value
+    player.addEventListener("player", (event) => {
+        value.textContent = event.target.value
+    })
+
+}

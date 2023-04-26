@@ -16,12 +16,3 @@ function select($sql, $conn) {
         return false;
     }
 }
-
-function update($sql, $conn) {
-    if ($conn->query($sql) === TRUE) {
-        return true;
-    } else {
-        return false;
-    }
-}
-

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "assets/controllers/session.php";
+include "assets/controllers/surrender.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,26 +14,33 @@ include "assets/controllers/session.php";
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
     <script src="assets/js/gameScript.js"></script>
     <script src="assets/js/script.js"></script>
-    <title>Board</title>
+    <title>Spēles galds</title>
 </head>
 
 <body>
     <div class="container center col">
         <div class="fullsize">
-            <form id="form">
-                <button class="hide-btn" onclick="getValue('assets/controllers/surrender.php')"><iconify-icon icon="ph:flag-fill" flip="horizontal" class="surr pointer" id="surr"></iconify-icon></button>
+            <form method="POST" class="h0">
+                <button class="hide-btn" name="surrender"><iconify-icon icon="ph:flag-fill" flip="horizontal" class="surr pointer" id="surr"></iconify-icon></button>
             </form>
             <div class="h25 center">
-                <button id="endenemyTurn">Beigt gājienu</button>
-                <button id="enemyPickUp">Pacelt</button>
-                <button id="enemyHit">Sists</button>
-                <button id="enemyHited">Piekrītu</button>
+                <div class="col center enamy-btns">
+                    <div class="row">
+                        <button id="endEnemyTurn" class="play-btn">Beigt gājienu</button>
+                        <button id="enemyPickUp" class="play-btn">Pacelt</button>
+                    </div>
+                    <div class="row">
+                        <button id="enemyHit" class="play-btn">Sists</button>
+                        <button id="enemyHited" class="play-btn">Piekrītu</button>
+                    </div>
+                </div>
 
                 <div id="enemy-cards" class="enemydeckcards"></div>
             </div>
             <div class="h50">
                 <div class="w20 center" id="w20">
-                    <img src="assets/cardimg/BACK.png" class="deck">
+                    <img src="assets/cardimg/BACK.png" id="back" class="deck left-back">
+                    <p id="text-sym"></p>
                 </div>
 
                 <div class="w58-mid center">
@@ -42,15 +50,21 @@ include "assets/controllers/session.php";
                 </div>
 
                 <div class="w20-hited center" id="hited">
-                    <img src="assets/cardimg/BACK.png" class="deck">
+                    <img src="assets/cardimg/BACK.png" class="deck right-back">
                 </div>
 
             </div>
             <div class="h25 center">
-                <button id="endPlayerTurn">Beigt gājienu</button>
-                <button id="playerPickUp">Pacelt</button>
-                <button id="playerHit">Sists</button>
-                <button id="playerHited">Piekrītu</button>
+                <div class="col center player-btns">
+                    <div class="row">
+                        <button id="endPlayerTurn" class="play-btn">Beigt gājienu</button>
+                        <button id="playerPickUp" class="play-btn">Pacelt</button>
+                    </div>
+                    <div class="row">
+                        <button id="playerHit" class="play-btn">Sists</button>
+                        <button id="playerHited" class="play-btn">Piekrītu</button>
+                    </div>
+                </div>
                 <div id="player-cards" class="deckcards"></div>
             </div>
         </div>

@@ -15,11 +15,11 @@ while ($row = $result->fetch_assoc()) {
         if ($text === TRUE) {
             $sql = "UPDATE userMach SET lastClick=NOW() WHERE userID='$userid'";
             $text = insert($sql, $conn);
-            echo "You earn 200 money";
+            echo "Jūs saņēmāt 200 naudiņas";
         } else {
-            echo "noo :/";
+            echo "Nesanāca saņemt naudu.";
         }
     } else {
-        echo "You can click the button again in 24 hours.";
+        echo "Jūs varat saņemt tikai reizi 24 stundu laikā.";
     }
 }

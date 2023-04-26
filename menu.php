@@ -1,8 +1,10 @@
 <?php
+
 session_start();
 include "assets/controllers/sessionDestroy.php";
 include "assets/controllers/session.php";
 include "assets/controllers/rightline.php";
+include "assets/controllers/showRoom.php";
 ?>
 
 <!DOCTYPE html>
@@ -14,13 +16,14 @@ include "assets/controllers/rightline.php";
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
     <script src="assets/js/script.js"></script>
-    <title>Menu</title>
+    <title>Izvelne</title>
 </head>
 
 <body>
     <div class="container center col">
-        <button onClick="location.href='http://into.id.lv/ip19/nils/game/board.php'">play</button>
+        <?php echo showUpRooms($conn); ?>
     </div>
+
 </body>
 
 </html>

@@ -11,7 +11,7 @@ $text = insert($sql, $conn);
 $text2 = insert($sql2, $conn);
 if ($text === TRUE && $text2 === TRUE) {
     session_destroy();
-    echo "Viss tika veiksmigi izdzēsts!";
+    echo "Jūsu profils tika veiksmigi izdzēsts!";
 } else {
     echo "Kluda! Neizdavas izdzēst.";
 }

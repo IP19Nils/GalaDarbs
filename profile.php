@@ -15,7 +15,7 @@ include "assets/controllers/rightline.php";
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
     <script src="assets/js/script.js"></script>
-    <title>Profile</title>
+    <title>Profils</title>
 </head>
 
 <body>
