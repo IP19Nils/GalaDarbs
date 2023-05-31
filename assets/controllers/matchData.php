@@ -19,7 +19,7 @@ function matchData($conn)
                             <img src=" . $row['img'] . " alt='Profile Image' style='width: 20vh; height: 20vh; object-fit: cover;'>
                         </label>
                         <input type='file' id='image' name='image' style='display:none;'>
-                        <button type='submit' name='submit' class='imgButton pointer'>Add Image</button>
+                        <button type='submit' name='submit' class='imgButton pointer'>Pievienot bildi</button>
                     </form>
                 </div>
                 <div class='w50-username center col'>
@@ -35,11 +35,11 @@ function matchData($conn)
                     <div class='w50-split jc-start'>
                         <div id='showUp' style='display:none'>
                             <div class='usernameChange center col'>
-                                <input type='text' class='input-changeUsername' name='wtf' placeholder='New username..'>
-                                <input type='password' class='input-changeUsername' name='wtf2' placeholder='Confirm password..'>
+                                <input type='text' class='input-changeUsername' name='wtf' placeholder='Jaunais lietotājvards'>
+                                <input type='password' class='input-changeUsername' name='wtf2' placeholder='Apsiptināt paroli..'>
                                 <div class='gap10 row'>
-                                    <button class='btn-changeUsername' onclick=getValue('assets/controllers/usernameChange.php')>Submit</button>
-                                    <button class='btn-changeUsername' onclick='changeUsername()'>Close</button>
+                                    <button class='btn-changeUsername' onclick=getValue('assets/controllers/usernameChange.php')>Mainīt</button>
+                                    <button class='btn-changeUsername' onclick='changeUsername()'>Aizvērt</button>
                                 </div>
                                 </form>
                             </div>

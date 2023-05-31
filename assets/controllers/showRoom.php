@@ -20,7 +20,7 @@ function showUpRooms($conn)
     </div>
     <div class='w20-cg'>
         <form method='POST' class='center'>
-        <a class='btn-play pointer center link' href='menu.php?id=" . $row['id'] . "'>play</a>
+        <a class='btn-play pointer center link' href='menu.php?id=" . $row['id'] . "'>Spēlēt</a>
         </form>
     </div>
 </div>

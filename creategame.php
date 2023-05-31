@@ -20,16 +20,16 @@ include "assets/controllers/roomCreate.php";
 </head>
 
 <body>
-
     <div class="container center col">
         <form method="POST" class="col">
-            <input type="text" name="name" placeholder="name" class="roomName">
+            <input type="text" name="name" placeholder="Istabas nosaukums" class="roomName">
+            <label for="money" class="color-w">Nauda:</label>
             <input type="number" name="money" min="200" value="200" max="10000000000" class="moneys">
+            <label for="player" class="color-w">Spēlētāji:</label>
             <div class="row gap10">
                 <input id="player" name="player" type="range" class="player" onclick="playerCount()" value="2" min="2" max="6" step="1">
                 <p class="color-w" id="value"></p>
             </div>
-
             <button name="roomCreate" class="roomCreate">Create Room</button>
     </div>
     </form>

@@ -68,8 +68,32 @@ include "assets/controllers/surrender.php";
                 <div id="player-cards" class="deckcards"></div>
             </div>
         </div>
-
     </div>
+    <script>
+        const socket = new WebSocket('ws://localhost:8080');
+
+        socket.onopen = () => {
+            console.log('WebSocket connection established.');
+        };
+
+        socket.onmessage = (event) => {
+            // Process the received message from the server
+            const message = event.data;
+            console.log('Received message:', message);
+
+            // Display the received message in the HTML body
+            const output = document.createElement('p');
+            output.textContent = `Received: ${message}`;
+            document.body.appendChild(output);
+        };
+
+        socket.onclose = () => {
+            console.log('WebSocket connection closed.');
+        };
+
+        // Example: Send a message to the server
+        socket.send('Hello, server!');
+    </script>
 </body>
 
 </html>

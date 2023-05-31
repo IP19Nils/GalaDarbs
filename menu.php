@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include "assets/controllers/sessionDestroy.php";
 include "assets/controllers/session.php";

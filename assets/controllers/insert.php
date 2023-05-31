@@ -53,9 +53,12 @@ if (!empty($name || $surname || $gmail || $username || $passwd || $reapetPasswd)
                                                     if (!filter_var($gmail, FILTER_VALIDATE_EMAIL)) {
                                                         echo "Nederīgs e-pasta formāts";
                                                     } else {
-                                                        $sql = "SELECT * FROM userData WHERE username='$username' OR gmail='$gmail'";
-                                                        $result = select($sql, $conn);
-                                                        if ($result) {
+                                                        $sql = "SELECT * FROM userData WHERE username= ? OR gmail= ?";
+                                                        $stmt = $conn->prepare($sql);
+                                                        $stmt->bind_param("ss", $username, $gmail);
+                                                        $stmt->execute();
+                                                        $result = $stmt->get_result();
+                                                        if ($result->num_rows > 0) {
                                                             echo "Lietotājs ar šadu lietotājvārdu vai ēpastu jau eksistē";
                                                         } else {
                                                             $mail = new PHPMailer;
@@ -65,35 +68,36 @@ if (!empty($name || $surname || $gmail || $username || $passwd || $reapetPasswd)
                                                             $mail->CharSet = 'UTF-8';
                                                             $mail->SMTPAuth   = true;
                                                             $mail->Username   = 'ip19.n.podins@vtdt.edu.lv';
-                                                            $mail->Password   = '150902-20105';
+                                                            $mail->Password   = 'Nilspodins123!';
                                                             $mail->SMTPSecure = 'tls';
                                                             $mail->Port       = 587;
                                                             $mail->setFrom('ip19.n.podins@vtdt.edu.lv', 'CardGame');
                                                             $mail->addAddress($gmail);
                                                             $mail->Subject = 'Ēpasta verificēšana';
-                                                            $mail->Body = 'Cienītais ' . $name . ', Lūdzu nospiediet uz saites lai verificētu savu profilu.';
-                                                            $mail->Body = 'http://into.id.lv/ip19/nils/game/assets/controllers/verify.php?gmailRegister=' . $gmail . '&token=' . $token;
+                                                            $mail->Body = 'Cienītais ' . $name . ' ' . $surname . ', Lūdzu nospiediet uz saites lai verificētu savu profilu. http://into.id.lv/ip19/nils/game/assets/controllers/verify.php?gmailRegister=' . $gmail . '&token=' . $token;
                                                             if (!$mail->send()) {
                                                                 echo '';
                                                                 echo 'Mailer Error: ' . $mail->ErrorInfo;
                                                             } else {
-                                                                echo 'Verifikācijas emails tika nosūtīts uz norādīto ēpastu.';
+                                                                echo 'Verifikācijas emails tika nosūtīts uz norādito ēpastu.';
                                                             }
-                                                            $sql = "INSERT INTO userData(`name`, surname, gmail, username, passwd, token, verified, registered)
-    VALUES ('$name', '$surname', '$gmail', '$username', '$hashPass', '$token', '0', NOW())";
-                                                            $text = insert($sql, $conn);
-                                                            if ($text === TRUE) {
+                                                            $sql = "INSERT INTO userData(name, surname, gmail, username, passwd, token, verified, registered)
+                                                            VALUES (?, ?, ?, ?, ?, ?, '0', NOW())";
+                                                            $stmt = $conn->prepare($sql);
+                                                            $stmt->bind_param("ssssss", $name, $surname, $gmail, $username, $hashPass, $token);
+                                                            if ($stmt->execute()) {
                                                                 $last_id = $conn->insert_id;
-                                                                $sql = "INSERT INTO userMach(`money`, userID, mach, win, lose, img, lastClick) 
-                                        VALUE ('1000', '$last_id', '0', '0', '0', 'assets/image/userIcon.png', '0000-00-00 00:00:00')";
-                                                                $text = insert($sql, $conn);
-                                                                if ($text === TRUE) {
-                                                                    echo "Veiksmigi izveidots lietotajs, pirms pievienošanās lūdzu verificējiet savu kontu.";
+                                                                $sql = "INSERT INTO userMach(money, userID, mach, win, lose, img, lastClick)
+                                                            VALUE ('1000', ?, '0', '0', '0', 'assets/image/userIcon.png', '0000-00-00 00:00:00')";
+                                                                $stmt = $conn->prepare($sql);
+                                                                $stmt->bind_param("i", $last_id);
+                                                                if ($stmt->execute()) {
+                                                                    echo "Veiksmīgi izveidots lietotājs, pirms pievienošanās lūdzu verificējiet savu kontu.";
                                                                 } else {
-                                                                    echo "Kluda! Neizdavas izveidot.";
+                                                                    echo "Kļūda! Neizdodas izveidot.";
                                                                 }
                                                             } else {
-                                                                echo "Kluda! Neizdavas izveidot.";
+                                                                echo "Kļūda! Neizdodas izveidot.";
                                                             }
                                                         }
                                                     }
@@ -112,7 +116,7 @@ if (!empty($name || $surname || $gmail || $username || $passwd || $reapetPasswd)
                         echo "Ievadiet savu paroli";
                     }
                 } else {
-                    echo "Ievadiet savu lietotāj vārdu";
+                    echo "Ievadiet savu lietotājvārdu";
                 }
             } else {
                 echo "Ievadiet savu ēpastu";

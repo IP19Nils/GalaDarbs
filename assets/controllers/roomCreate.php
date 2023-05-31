@@ -8,7 +8,7 @@ if (isset($_POST['roomCreate'])) {
     $money = $_POST['money'];
     $player = $_POST['player'];
 
-    $sql = "INSERT INTO createGame(`name`, playerCount, pay, playerJoin, `status`, c1, c2) VALUES ('$name', '$player', '$money', '1', '0', '', '')";
+    $sql = "INSERT INTO createGame(`name`, playerCount, pay, playerJoin, `status`) VALUES ('$name', '$player', '$money', '1', '0')";
     $text = insert($sql, $conn);
     if ($text === TRUE) {
         echo "okey";

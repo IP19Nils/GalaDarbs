@@ -76,6 +76,7 @@ function loginForgotPass() {
     }
 }
 
+/** */
 function changeUsername() {
 
     let i = document.getElementById("showUp");
@@ -83,6 +84,7 @@ function changeUsername() {
         i.style.display = "block";
     } else {
         i.style.display = "none";
+        
     }
 }
 

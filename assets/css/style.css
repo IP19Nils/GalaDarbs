@@ -905,3 +905,18 @@ input:checked+.slider:before {
         width: 12vh;
     }
 }
+
+@media only screen and (max-width: 422px) {
+
+    .w80-cg {
+        width: 100%;
+    }
+
+    .bg-line {
+        width: 35vh;
+    }
+
+    .btn-play {
+        width: 5vh;
+    }
+}

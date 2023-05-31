@@ -1,6 +1,4 @@
 window.onload = function () {
-    buildDeck();
-    shuffleDeck();
     createMainCard();
     playerDeckCard();
     playerMoves();
@@ -14,11 +12,10 @@ window.onload = function () {
     enemyTurnEnd();
     enemyHitEnd();
     enemyAcceptCards();
-    // surrender();
+    GameEnd();
 };
 
-let values = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let symbol = ["C", "D", "H", "S"];
+let appendedCard;
 let deck = [];
 let playerDeck = [];
 let enemyDeck = [];
@@ -62,44 +59,72 @@ let playerAccept = false;
 let enemyTurn = false;
 let enemyAccept = false;
 let enemyHit = false;
+let sendCard;
+let appendCardArray = [];
+let sendCards = [];
+
+const socket = new WebSocket('ws://localhost:8080');
+
+socket.onopen = () => {
+    console.log('WebSocket connection established.');
+};
+
+socket.onmessage = (event) => {
+    // Process the received message from the server
+
+    const message = JSON.parse(event.data);
+    console.log('Received message:', message);
 
 
-//create a deck
-function buildDeck() {
-    for (let i = 0; i < 4; i++) {
-        for (let x = 0; x < 13; x++) {
-            deck.push(values[x] + "-" + symbol[i]);
+    if (message.type == "deck") {
+        deck = message.data;
+    }
+    if (message.type == "playerDeck") {
+        playerDeck = message.data;
+    }
+    if (message.type == "enemyDeck") {
+        enemyDeck = message.data;
+    }
+    if (message.type == "mainCard") {
+        randomCard = message.data;
+    }
+    if (message.type == "sendCard") {
+        sendCards = message.data;
+
+        for (let i = 0; i < sendCards.length; i++) {
+            let newCard = sendCards[i];
+            console.log(newCard);
+            cardImg = document.createElement("img");
+            cardImg.src = "assets/cardimg/" + newCard + ".png";
+            cardImg.id = "none";
+            cardImg.dataset.value = newCard;
+            document.getElementById("placed-cards").append(cardImg);
         }
     }
-}
+    console.log(sendCards);
+};
 
-//shuffle a deck
-function shuffleDeck() {
-    for (let i = 0; i < deck.length; i++) {
-        let x = Math.floor(Math.random() * deck.length);
-        let temp = deck[i];
-        deck[i] = deck[x];
-        deck[x] = temp;
-    }
+socket.onclose = () => {
+    console.log('WebSocket connection closed.');
+};
 
-    //print out in console
-    console.log(deck);
-}
+socket.onerror = (error) => {
+    console.error('WebSocket error:', error);
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //create trupju tuzi
 function createMainCard() {
     for (let i = 0; i < 1; i++) {
+        let newCard = randomCard[i];
         cardImg = document.createElement("img");
-        card = deck.pop();
         // cardNumber = !isNaN(card.charAt(0)) ? parseInt(card.substring(0, card.search("-"))) : card.substring(0, card.search("-"));
-        cardSymbol = card.charAt(card.length - 1)
-        cardImg.src = "assets/cardimg/" + card + ".png";
+        cardSymbol = newCard.charAt(newCard.length - 1)
+        cardImg.src = "assets/cardimg/" + newCard + ".png";
         cardImg.id = "maste";
-        cardImg.dataset.value = card;
+        cardImg.dataset.value = newCard;
         document.getElementById("w20").append(cardImg);
-        randomCard.push(card);
         // console.log("Trumpju kārts cipars " + cardNumber);
         console.log("Trumpju kārts simbols " + cardSymbol);
     }
@@ -128,19 +153,19 @@ function createMainCard() {
 //create player deck
 function playerDeckCard() {
     for (let i = 0; i < 6; i++) {
+        let newCard = playerDeck[i];
         cardImg = document.createElement("img");
-        card = deck.pop();
-        cardImg.src = "assets/cardimg/" + card + ".png";
+        cardImg.src = "assets/cardimg/" + newCard + ".png";
         cardImg.id = "card-InHands";
-        cardImg.dataset.value = card;
+        cardImg.dataset.value = newCard;
         document.getElementById("player-cards").append(cardImg);
-        playerDeck.push(card);
     }
 
     //print player card
     console.log("speletaja kārtis " + playerDeck);
     console.log("speletaja karsu daudzums " + playerDeck.length);
 }
+
 
 //drop player card on table
 function playerMoves() {
@@ -287,7 +312,20 @@ function playerMoves() {
                     console.log("uzpieztās kārts simbols " + playerCardSym);
                     console.log("spēlētāja kārtis tagad " + playerDeck);
 
-                    table.append(this);
+                    console.log(this);
+                    // table.append(this);
+                    this.remove();
+
+                    appendCardArray.push(this.dataset.value);
+
+                    sendCard = {
+                        "type": "sendCard",
+                        "data": appendCardArray,
+                    }
+
+
+                    socket.send(JSON.stringify(sendCard));
+
                     this.id = "none";
                     cardTable.push(this.dataset.value);
                     console.log("kārtis uz galda " + cardTable);
@@ -469,7 +507,6 @@ function playerPickUpCard() {
                 enemyPrevOnTable = "";
                 playerPrevOnTable = "";
 
-
                 //ja kārtis nav palikušas izvada konsolē tikai tekstu
                 if (enemyDeck.length < 6 && deck.length == 0 && lastCard == null) {
                     console.log("nav vairāk kāršu ko ņemt");
@@ -535,13 +572,12 @@ function playerHitEnd() {
 // create enemy deack
 function EnemyDeckCard() {
     for (let i = 0; i < 6; i++) {
+        let newCard = enemyDeck[i];
         cardImg = document.createElement("img");
-        card = deck.pop();
-        cardImg.src = "assets/cardimg/" + card + ".png";
+        cardImg.src = "assets/cardimg/" + newCard + ".png";
         cardImg.id = "enemy-look";
-        cardImg.dataset.value = card;
+        cardImg.dataset.value = newCard;
         document.getElementById("enemy-cards").append(cardImg);
-        enemyDeck.push(card);
     }
 
     //print enemy cards
@@ -925,10 +961,13 @@ function enemyAcceptCards() {
     });
 }
 
-// //surrender
-// function surrender() {
-//     let endGame = document.getElementById("surr");
-//     endGame.addEventListener("click", function () {
-//         window.location = "./menu.php";
-//     });
-// }
+//GameEnd
+function GameEnd() {
+    if (playerDeck == 0 && deck.length && 0 && randomCard.length == 0) {
+        window.location = "./menu.php";
+        alert("game end, player win");
+    } else if (enemyDeck == 0 && deck.length && 0 && randomCard.length == 0) {
+        window.location = "./menu.php";
+        alert("game end, enemy win");
+    }
+}
