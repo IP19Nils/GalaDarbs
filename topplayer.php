@@ -13,8 +13,7 @@ include "assets/controllers/rightline.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
-    <script src="assets/js/script.js"></script>
-    <title>Player top</title>
+    <title>Labākie spēlētāji</title>
 </head>
 
 <body>
@@ -27,16 +26,16 @@ include "assets/controllers/rightline.php";
                         <p class="btn-name">Nauda</p>
                     </div>
                 </button>
-                <button class="option-btn hide-btn pointer win" id="option-btn" name="win">
-                    <div class="col">
-                        <p class="btn-emoji">🏆</p>
-                        <p class="btn-name">Uzvaras</p>
-                    </div>
-                </button>
                 <button class="option-btn hide-btn pointer mach" id="option-btn" name="mach">
                     <div class="col">
                         <p class="btn-emoji">🏅</p>
                         <p class="btn-name">Mači</p>
+                    </div>
+                </button>
+                <button class="option-btn hide-btn pointer win" id="option-btn" name="win">
+                    <div class="col">
+                        <p class="btn-emoji">🏆</p>
+                        <p class="btn-name">Uzvaras</p>
                     </div>
                 </button>
                 <button class="option-btn hide-btn pointer lose" id="option-btn" name="lose">

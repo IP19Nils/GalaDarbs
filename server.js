@@ -2,7 +2,6 @@ const WebSocket = require('ws');
 
 const wsServer = new WebSocket.Server({ port: 8080 });
 
-// Create an object to store user IDs
 const connectedUsers = {};
 let deck = [];
 let values = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
@@ -11,9 +10,25 @@ let playerDeck = [];
 let enemyDeck = [];
 let card;
 let randomCard = [];
-// Function to generate a unique user ID
+let previousNumber = -1;
+// funkcija priekš id ģenerēšanas
 function generateUserID() {
     return Math.random().toString(36).substr(2, 9);
+}
+
+function firstMove() {
+    let randomNumber = Math.round(Math.random()); // Generate a random number (either 0 or 1)
+
+    // Check if the generated number is the same as the previous number
+    if (randomNumber === previousNumber) {
+        // If the generated number is the same as the previous number,
+        // invert it (change 0 to 1 or 1 to 0)
+        randomNumber = (randomNumber + 1) % 2;
+    }
+
+    previousNumber = randomNumber; // Store the current number as the previous number for the next iteration
+
+    return randomNumber;
 }
 
 wsServer.on('connection', (ws) => {
@@ -28,36 +43,38 @@ wsServer.on('connection', (ws) => {
         playerDeck = enemyDeck;
         enemyDeck = random;
     }
-    // Generate a unique user ID for the connected client
+    // izveido unikāli id un piešķir to 
     const userID = generateUserID();
-
-    // Store the user ID in the connectedUsers object
+    let numbers = firstMove();
+    // saglabā lietotāja id objektā
     connectedUsers[ws] = userID;
 
     ws.on('message', (message) => {
-        // Process the received message from the client
+        // apstrādā saņemot ziņojumu no klienta
         console.log('Received message from user', connectedUsers[ws] + ':', JSON.parse(message));
 
-        // You can perform any necessary processing here, such as interacting with databases or APIs, and send the response back to the client via the WebSocket
+        // Šeit varat veikt jebkuru nepieciešamo apstrādi, piemēram, mijiedarboties ar datu bāzēm vai API, un nosūtīt atbildi atpakaļ klientam, izmantojot WebSocket.
         const response = `Processed: ${message}`;
 
         wsServer.clients.forEach(client => client.send(JSON.stringify(JSON.parse(message))));
-        // Send the response back to the client
+        // nosūta atbildi atpakaļ klientam
         // ws.send(response);
     });
 
     ws.on('close', () => {
-        // Handle WebSocket connection close event
+        // apstrādā savienojuma beigšanas ziņojumu
         console.log('WebSocket connection closed for user', connectedUsers[ws]);
 
-        // Remove the user ID from the connectedUsers object
+        // noņemt lietotāja id no objekta
         delete connectedUsers[ws];
     });
     const users = {
         "type": "userID",
-        "data": userID
+        "data": userID,
+        "number": numbers
     }
     ws.send(JSON.stringify(users));
+
     console.log(deck);
     let decks = {
         "type": "deck",
@@ -88,7 +105,7 @@ wsServer.on('connection', (ws) => {
     console.log('WebSocket connection established for user', userID);
 });
 
-//create a deck
+//izveido kārtis
 function buildDeck() {
     for (let i = 0; i < 4; i++) {
         for (let x = 0; x < 13; x++) {
@@ -97,7 +114,7 @@ function buildDeck() {
     }
 }
 
-//shuffle a deck
+//sajauc kārtis
 function shuffleDeck() {
     for (let i = 0; i < deck.length; i++) {
         let x = Math.floor(Math.random() * deck.length);
@@ -106,11 +123,10 @@ function shuffleDeck() {
         deck[x] = temp;
     }
 
-    //print out in console
     console.log(deck);
 }
 
-//create player deck
+//izveido spēlētāja kārtis
 function playerDeckCard() {
     for (let i = 0; i < 6; i++) {
         card = deck.pop();
@@ -118,6 +134,7 @@ function playerDeckCard() {
     }
 }
 
+//izveido pretinieka kārtis
 function enemyDeckCard() {
     for (let i = 0; i < 6; i++) {
         card = deck.pop();
@@ -125,6 +142,7 @@ function enemyDeckCard() {
     }
 }
 
+//izveido trupju tuzi
 function createMainCard() {
     for (let i = 0; i < 1; i++) {
         card = deck.pop();

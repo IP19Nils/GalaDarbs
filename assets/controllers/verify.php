@@ -2,14 +2,14 @@
 include "../config/db.php";
 include "../modules/dbOperations.php";
 
-// Retrieve the email and token from the URL
+// Izgūst e-pastu un token no URL
 $gmail = $_GET['gmailRegister'];
 $token = $_GET['token'];
 
-// Connect to your database
+// Pieslēdzas datubāzei
 $pdo = new PDO('mysql:host=localhost;dbname=NilsP', 'skolnieks', 'pQcM10ClEn3lSWy');
 
-// Query your database to check if the token matches the gmail
+// Veic vaicājumu datubāzei, lai pārbaudītu, vai tokens atbilst e-pastam
 $stmt = $pdo->prepare("SELECT * FROM userData WHERE gmail = :gmail AND token = :token");
 $stmt->execute(['gmail' => $gmail, 'token' => $token]);
 $user = $stmt->fetch();
@@ -18,22 +18,26 @@ $result = select($sql, $conn);
 while ($row = $result->fetch_assoc()) {
     $time = strtotime($row['registered']);
     if (time() - $time >= 1.5 * 60 * 60) {
-        echo "Atvainojiet verifikācijas laiks pagāja lūdzu mēginiet vēlreiz";
-        $sql = "DELETE FROM userData WHERE gmail='$gmail'";
-        $text = insert($sql, $conn);
-        if ($text === TRUE) {
+        echo "Atvainojiet, verifikācijas laiks ir pagājis. Lūdzu, mēģiniet vēlreiz.";
+        // Izmanto sagatavotu izteikumu ar parametrizētu vaicājumu
+        $sql = "DELETE FROM userData WHERE gmail = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $gmail);
+        $stmt->execute();
+        // Pārbauda, vai vaicājums izpildījās veiksmīgi
+        if ($stmt->affected_rows > 0) {
         }
     } else {
         if ($user) {
-            // Update the `verified` field in your database if the token matches
+            // Atjauno `verified` lauku datubāzē, ja tokens atbilst
             $stmt = $pdo->prepare("UPDATE userData SET verified = 1 WHERE gmail = :gmail");
             $stmt->execute(['gmail' => $gmail]);
 
-            // Display a message to the user
-            echo "Your email has been verified.";
+            // Rāda lietotājam paziņojumu
+            echo "Jūsu e-pasts ir verificēts.";
         } else {
-            // Display an error message if the token does not match
-            echo "Invalid verification link.";
+            // Rāda kļūdas paziņojumu, ja tokens neatbilst
+            echo "Nederīga verifikācijas saite.";
         }
     }
 }

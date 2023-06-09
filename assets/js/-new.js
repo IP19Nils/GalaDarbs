@@ -93,14 +93,14 @@ setTimeout(() => {
 }, 3000);
 
 
-    //create a deck
-    function buildDeck() {
-        for (let i = 0; i < 4; i++) {
-            for (let x = 0; x < 13; x++) {
-                deck.push(values[x] + "-" + symbol[i]);
-            }
+//create a deck
+function buildDeck() {
+    for (let i = 0; i < 4; i++) {
+        for (let x = 0; x < 13; x++) {
+            deck.push(values[x] + "-" + symbol[i]);
         }
     }
+}
 
 //shuffle a deck
 function shuffleDeck() {

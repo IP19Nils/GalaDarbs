@@ -12,8 +12,7 @@ session_start();
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
     <script src="assets/js/script.js"></script>
-
-    <title>Login</title>
+    <title>Pievienošnās</title>
 </head>
 
 <body>

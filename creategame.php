@@ -1,6 +1,5 @@
 <?php
 session_start();
-include "assets/config/db.php";
 include "assets/controllers/sessionDestroy.php";
 include "assets/controllers/session.php";
 include "assets/controllers/rightline.php";
@@ -16,7 +15,7 @@ include "assets/controllers/roomCreate.php";
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
     <script src="assets/js/script.js"></script>
-    <title>CreateGame</title>
+    <title>Izveidot spēli</title>
 </head>
 
 <body>

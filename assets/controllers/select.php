@@ -46,10 +46,10 @@ if (!empty($username || $passwd)) {
             $stmt->close();
             $conn->close();
         } else {
-            echo "Aizpildiet Paroles ievades lauku";
+            echo "Aizpildiet paroles ievades lauku";
         }
     } else {
-        echo "Aizpildiet Lietotāja ievades lauku";
+        echo "Aizpildiet lietotāja ievades lauku";
     }
 } else {
     echo "Aizpildiet visus ievades laukus";

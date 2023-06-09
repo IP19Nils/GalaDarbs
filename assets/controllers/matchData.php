@@ -35,8 +35,8 @@ function matchData($conn)
                     <div class='w50-split jc-start'>
                         <div id='showUp' style='display:none'>
                             <div class='usernameChange center col'>
-                                <input type='text' class='input-changeUsername' name='wtf' placeholder='Jaunais lietotājvards'>
-                                <input type='password' class='input-changeUsername' name='wtf2' placeholder='Apsiptināt paroli..'>
+                                <input type='text' class='input-changeUsername' name='username' placeholder='Jaunais lietotājvards..'>
+                                <input type='password' class='input-changeUsername' name='passwd' placeholder='Apsiptināt paroli..'>
                                 <div class='gap10 row'>
                                     <button class='btn-changeUsername' onclick=getValue('assets/controllers/usernameChange.php')>Mainīt</button>
                                     <button class='btn-changeUsername' onclick='changeUsername()'>Aizvērt</button>

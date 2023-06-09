@@ -60,7 +60,9 @@ let enemyTurn = false;
 let enemyAccept = false;
 let enemyHit = false;
 let sendCard;
+let sendHitCard;
 let appendCardArray = [];
+let appendHitCardArray = [];
 let sendCards = [];
 
 const socket = new WebSocket('ws://localhost:8080');
@@ -99,6 +101,20 @@ socket.onmessage = (event) => {
             cardImg.id = "none";
             cardImg.dataset.value = newCard;
             document.getElementById("placed-cards").append(cardImg);
+        }
+    }
+
+    if (message.type == "sendHitCard") {
+        sendHitCard = message.data;
+
+        for (let i = 0; i < sendHitCard.length; i++) {
+            let newCard = sendHitCard[i];
+            console.log(newCard);
+            cardImg = document.createElement("img");
+            cardImg.src = "assets/cardimg/" + newCard + ".png";
+            cardImg.id = "none";
+            cardImg.dataset.value = newCard;
+            document.getElementById("hit-cards").append(cardImg);
         }
     }
     console.log(sendCards);
@@ -627,7 +643,17 @@ function enemyMoves() {
                     if (cardCountPlayer <= 0) {
                         console.log("Nav vairāk kāršu ko sist");
                     } else {
-                        tableHit.append(this);
+                        // tableHit.append(this);
+                        this.remove();
+                        appendHitCardArray.push(this.dataset.value);
+
+                        sendHitCard = {
+                            "type": "sendHitCard",
+                            "data": appendHitCardArray,
+                        }
+    
+                        socket.send(JSON.stringify(sendHitCard));
+
                         this.id = "none";
                         cardCountPlayer--;
 

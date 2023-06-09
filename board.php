@@ -12,8 +12,7 @@ include "assets/controllers/surrender.php";
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-    <script src="assets/js/gameScript.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/gameScript.js" defer></script>
     <title>Spēles galds</title>
 </head>
 
@@ -25,11 +24,11 @@ include "assets/controllers/surrender.php";
             </form>
             <div class="h25 center">
                 <div class="col center enamy-btns">
-                    <div class="row">
+                    <div class="playBtn-row">
                         <button id="endEnemyTurn" class="play-btn">Beigt gājienu</button>
                         <button id="enemyPickUp" class="play-btn">Pacelt</button>
                     </div>
-                    <div class="row">
+                    <div class="playBtn-row">
                         <button id="enemyHit" class="play-btn">Sists</button>
                         <button id="enemyHited" class="play-btn">Piekrītu</button>
                     </div>
@@ -56,11 +55,11 @@ include "assets/controllers/surrender.php";
             </div>
             <div class="h25 center">
                 <div class="col center player-btns">
-                    <div class="row">
+                    <div class="playBtn-row">
                         <button id="endPlayerTurn" class="play-btn">Beigt gājienu</button>
                         <button id="playerPickUp" class="play-btn">Pacelt</button>
                     </div>
-                    <div class="row">
+                    <div class="playBtn-row">
                         <button id="playerHit" class="play-btn">Sists</button>
                         <button id="playerHited" class="play-btn">Piekrītu</button>
                     </div>
@@ -70,29 +69,7 @@ include "assets/controllers/surrender.php";
         </div>
     </div>
     <script>
-        const socket = new WebSocket('ws://localhost:8080');
-
-        socket.onopen = () => {
-            console.log('WebSocket connection established.');
-        };
-
-        socket.onmessage = (event) => {
-            // Process the received message from the server
-            const message = event.data;
-            console.log('Received message:', message);
-
-            // Display the received message in the HTML body
-            const output = document.createElement('p');
-            output.textContent = `Received: ${message}`;
-            document.body.appendChild(output);
-        };
-
-        socket.onclose = () => {
-            console.log('WebSocket connection closed.');
-        };
-
-        // Example: Send a message to the server
-        socket.send('Hello, server!');
+        
     </script>
 </body>
 
