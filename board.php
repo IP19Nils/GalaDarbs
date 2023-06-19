@@ -12,7 +12,7 @@ include "assets/controllers/surrender.php";
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/image/3043464.jpg">
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-    <script src="assets/js/gameScript.js" defer></script>
+    <script src="assets/js/gameScript-bu.js" defer></script>
     <title>Spēles galds</title>
 </head>
 
